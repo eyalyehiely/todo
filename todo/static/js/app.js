@@ -43,25 +43,40 @@ taskDiv.style.gap = '2vh';
 
 let name = document.createElement('input');
 name.placeholder = 'Name';
+name.id = 'name'
 
 let description = document.createElement('input');
 description.placeholder = 'Description';
+description.id = 'description'
 
 let givenDate = document.createElement('input');
 givenDate.placeholder = 'Date';
+givenDate.type = 'date';
+givenDate.id ='givenDate'
 
 let finishDate = document.createElement('input');
+finishDate.type='date';
 finishDate.placeholder = 'Finish Date';
+finishDate.id ='finishDate'
 
 let givenBy = document.createElement('input');
 givenBy.placeholder = 'Given by';
+givenBy.id ='givenBy'
 
 let complete = document.createElement('input');
+complete.id= 'complete';
+complete.type='checkbox';
+complete.value = '1';
+
 
 complete.placeholder = 'Complete';
 
-let updatedAt = document.createElement('time');
+let updatedAt = document.createElement('input');
 updatedAt.placeholder = 'Updated_at';
+updatedAt.id ='updatedAt';
+updatedAt.type = 'date';
+
+
 //appending inputs
 taskDiv.appendChild(name);
 taskDiv.appendChild(description);
@@ -95,6 +110,22 @@ let saveButton = document.createElement('button');
 saveButton.id = 'save';
 saveButton.textContent = '✅' ;
 
+
+saveButton.addEventListener('click',()=>{
+    axios.post('/api/create',{
+        name:document.getElementById('name').value,
+        description:document.getElementById('description').value,
+        date:document.getElementById('givenDate').value,
+        finishDate:document.getElementById('finishDate').value,
+        givenBy:document.getElementById('givenBy').value,
+        complete:document.getElementById('complete').value,
+        updateAt:document.getElementById('updatedAt').value,
+}.then((response))=>)   
+
+})
+
+
+
 //appending buttons
 card1.appendChild(deleteButton);
 card1.appendChild(editButton)
@@ -103,15 +134,12 @@ card1.appendChild(taskDiv);
 cardDiv.appendChild(card1);
 }
 
-// saveButton.addEventListener('click',()=>{
 
-// })
+
 
 
 let data = document.getElementById('data')
 document.body.appendChild(data);
 document.body.appendChild(container);
 document.body.appendChild(cardDiv);
-
-
 

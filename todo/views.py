@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required ,permission_required
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from .models import Task
+from django.http import JsonResponse
+import json
 
 
 def login(request):
@@ -53,3 +55,19 @@ def register(request):
 
     return render(request, 'todo/register.html')
 
+
+def createTask(request):
+    name = json.loads(request.body)['name']
+    description = json.loads(request.body)['description']
+    date = json.loads(request.body)['date']
+    finishDate = json.loads(request.body)['finishDate']
+    givenBy = json.loads(request.body)['givenBy']
+    complete = json.loads(request.body)['complete']
+    if complete == '1':
+        complete= True
+    else:
+        complete =False
+    updateAt = json.loads(request.body)['updateAt']
+    task1 = Task.objects.create(name = name, description = description, given_date = date, finish_date = finishDate, given_by = givenBy,complete = complete,updated_at = updateAt,user_id = User.objects.get(id=1))
+    task1.save()
+    return JsonResponse({"status": "ok"})
