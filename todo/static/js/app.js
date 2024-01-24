@@ -94,41 +94,52 @@ card1.style.backgroundColor='ghostwhite';
 
 
 
-// delete button
-let deleteButton = document.createElement('button');
-deleteButton.id = 'delete';
-deleteButton.textContent =  '🗑️';
-
-
-// edit button
-let editButton = document.createElement('button');
-editButton.id = 'edit';
-editButton.textContent = '📝' ;
-
 // save button
 let saveButton = document.createElement('button');
 saveButton.id = 'save';
 saveButton.textContent = '✅' ;
 
 
-saveButton.addEventListener('click',()=>{
-    axios.post('/api/create',{
-        name:document.getElementById('name').value,
-        description:document.getElementById('description').value,
-        date:document.getElementById('givenDate').value,
-        finishDate:document.getElementById('finishDate').value,
-        givenBy:document.getElementById('givenBy').value,
-        complete:document.getElementById('complete').value,
-        updateAt:document.getElementById('updatedAt').value,
-}.then((response))=>)   
+// saveButton.addEventListener('click',()=>{
+//     axios.post('/api/create',{
+//         name:document.getElementById('name').value,
+//         description:document.getElementById('description').value,
+//         date:document.getElementById('givenDate').value,
+//         finishDate:document.getElementById('finishDate').value,
+//         givenBy:document.getElementById('givenBy').value,
+//         complete:document.getElementById('complete').value,
+//         updateAt:document.getElementById('updatedAt').value,
+// }.then((response)=>{if(response.data.status =='ok'){
+//    document.getElementById('test').innerHTML=response.data
+// }}
+// )}
 
-})
+saveButton.addEventListener('click', () => {
+   
+    axios.post('/api/create', {
+        name: document.getElementById('name').value,
+        description: document.getElementById('description').value,
+        date: document.getElementById('givenDate').value,
+        finishDate: document.getElementById('finishDate').value,
+        givenBy: document.getElementById('givenBy').value,
+        complete: document.getElementById('complete').value,
+        updateAt: document.getElementById('updatedAt').value,
+    })
+    .then((response) => {
+        if (response.data.status === 'ok') {
+            document.getElementById('test').innerHTML = response.data.message;
+        }
+        else{
+            
+        }
+    })
+   
+  
+});
 
 
 
 //appending buttons
-card1.appendChild(deleteButton);
-card1.appendChild(editButton)
 card1.appendChild(saveButton);
 card1.appendChild(taskDiv);
 cardDiv.appendChild(card1);
@@ -141,5 +152,6 @@ cardDiv.appendChild(card1);
 let data = document.getElementById('data')
 document.body.appendChild(data);
 document.body.appendChild(container);
-document.body.appendChild(cardDiv);
+
+
 

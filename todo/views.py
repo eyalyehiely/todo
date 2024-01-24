@@ -71,3 +71,7 @@ def createTask(request):
     task1 = Task.objects.create(name = name, description = description, given_date = date, finish_date = finishDate, given_by = givenBy,complete = complete,updated_at = updateAt,user_id = User.objects.get(id=1))
     task1.save()
     return JsonResponse({"status": "ok"})
+
+
+
+# def deleteTask(request):
