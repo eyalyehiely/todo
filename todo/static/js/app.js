@@ -100,19 +100,7 @@ saveButton.id = 'save';
 saveButton.textContent = '✅' ;
 
 
-// saveButton.addEventListener('click',()=>{
-//     axios.post('/api/create',{
-//         name:document.getElementById('name').value,
-//         description:document.getElementById('description').value,
-//         date:document.getElementById('givenDate').value,
-//         finishDate:document.getElementById('finishDate').value,
-//         givenBy:document.getElementById('givenBy').value,
-//         complete:document.getElementById('complete').value,
-//         updateAt:document.getElementById('updatedAt').value,
-// }.then((response)=>{if(response.data.status =='ok'){
-//    document.getElementById('test').innerHTML=response.data
-// }}
-// )}
+
 
 saveButton.addEventListener('click', () => {
    
@@ -152,6 +140,11 @@ cardDiv.appendChild(card1);
 let data = document.getElementById('data')
 document.body.appendChild(data);
 document.body.appendChild(container);
+document.body.appendChild(cardDiv);
+
+
+
+
 
 
 
