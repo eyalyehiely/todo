@@ -68,12 +68,13 @@ def createTask(request):
     else:
         complete =False
     updateAt = json.loads(request.body)['updateAt']
-    task1 = Task.objects.create(name = name, description = description, given_date = date, finish_date = finishDate, given_by = givenBy,complete = complete,updated_at = updateAt,user_id = request.user.id)
+    task1 = Task.objects.create(name = name, description = description, given_date = date, finish_date = finishDate, given_by = givenBy,complete = complete,updated_at = updateAt,user_id = User.objects)
     task1.save()
     return JsonResponse({"status": "ok"})
 
 # get all tasks per user
 def get_tasks(request):
+    global tasks_list
     current_user_id = request.user.id
     tasks_list=[]
     tasks = Task.objects.filter(user_id=current_user_id)
@@ -88,3 +89,14 @@ def get_tasks(request):
        }
        tasks_list.append(task_data)
     return JsonResponse({'tasks':tasks_list})
+
+
+
+def delete_task(request,task_id):
+    try:
+        task = Task.objects.filter(id=task_id)
+        task.delete()
+        return JsonResponse({'tasks':tasks_list})
+    except:
+        return JsonResponse({"status":f"No such task with {task_id} id"})
+

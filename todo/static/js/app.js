@@ -115,13 +115,36 @@ saveButton.addEventListener('click', () => {
     })
    
     })
-   
+    card1.appendChild(saveButton);
+    card1.appendChild(taskDiv);
+    cardDiv.appendChild(card1);
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+document.body.appendChild(container);
+document.body.appendChild(cardDiv);
+
+
+
+
 function getTasks() {
     axios.get('http://127.0.0.1:8000/api/read').then((response) => {
-        if(response.data.tasks==[]){
+        if(response.data.tasks.length==0){
             document.getElementById('tasks').innerHTML = 'No Tasks for this user';
         }
         else{
+           
         const table = `
             <table>
                 <tr>
@@ -140,6 +163,9 @@ function getTasks() {
                         <td>${item.given_by}</td>
                         <td>${item.complete}</td>
                         <td>${item.updated_at}</td>
+                        <input type="hidden" name="id" value="{${item.id}}">
+                        <td><button id="{${item.id}}" name='deleteButton onclick= ${deleteTask(item.id)}">🗑️</button></td>
+                        <td><button id="edit" onclick="editTask(${item.id})">📝</button></td>
                     </tr>
                 `)}
             </table>`;
@@ -152,24 +178,19 @@ function getTasks() {
 
 }
 
-    getTasks();
+getTasks();
     
 
 
+function deleteTask() {
+    axios.get('http://127.0.0.1:8000/api/delete/task_id').then((response)=>{
+        response.data.tasks
 
-//appending buttons
-card1.appendChild(saveButton);
-card1.appendChild(taskDiv);
-cardDiv.appendChild(card1);
+    })
+
+    
 }
 
-
-
-
-
-
-document.body.appendChild(container);
-document.body.appendChild(cardDiv);
 
 
 

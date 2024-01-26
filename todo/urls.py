@@ -7,5 +7,6 @@ path('register/',views.register,name='register'),
 path('', views.home, name = 'home'),
 path('api/create',views.createTask,name='createTask'),
 path('api/read',views.get_tasks,name='get_tasks'),
+path('api/delete/<int:task_id>/', views.delete_task, name='delete_task'),
 
 ]
