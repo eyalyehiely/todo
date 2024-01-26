@@ -87,4 +87,4 @@ def get_tasks(request):
        'updated_at':task.updated_at
        }
        tasks_list.append(task_data)
-    return JsonResponse({'all_data':tasks_list})
+    return JsonResponse({'tasks':tasks_list})

@@ -117,11 +117,15 @@ saveButton.addEventListener('click', () => {
     })
    
 function getTasks(){
-    axios.get('http://127.0.0.1:8000//api/read').then((response)=>{
-    document.getElementById('test').innerHTML = response.data.data;
+    axios.get('http://127.0.0.1:8000/api/read').then((response)=>{
+    document.getElementById('test').innerHTML = response.data.tasks;
+})
+.catch((error)=>{
+    document.getElementById('test').innerHTML = 'Error fetching tasks. Please try again.';
+})
 }
     
-)}
+
         
 getTasks();
 
