@@ -55,7 +55,7 @@ def register(request):
 
     return render(request, 'todo/register.html')
 
-
+# creating a task
 def createTask(request):
     name = json.loads(request.body)['name']
     description = json.loads(request.body)['description']
@@ -72,6 +72,19 @@ def createTask(request):
     task1.save()
     return JsonResponse({"status": "ok"})
 
-
-
-# def deleteTask(request):
+# get all tasks per user
+def get_tasks(request):
+    current_user_id = request.user.id
+    tasks_list=[]
+    tasks = Task.objects.filter(user_id=current_user_id)
+    for task in tasks:
+       task_data ={
+       "name":task.name,
+       'description':task.given_date,
+       'finish_date':task.finish_date,
+       'given_by':task.given_by,
+       'complete':task.complete,
+       'updated_at':task.updated_at
+       }
+       tasks_list.append(task_data)
+    return JsonResponse({'all_data':tasks_list})

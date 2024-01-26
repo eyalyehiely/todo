@@ -113,17 +113,18 @@ saveButton.addEventListener('click', () => {
         complete: document.getElementById('complete').value,
         updateAt: document.getElementById('updatedAt').value,
     })
-    .then((response) => {
-        if (response.data.status === 'ok') {
-            document.getElementById('test').innerHTML = response.data.message;
-        }
-        else{
-            
-        }
+   
     })
    
-  
-});
+function getTasks(){
+    axios.get('http://127.0.0.1:8000//api/read').then((response)=>{
+    document.getElementById('test').innerHTML = response.data.data;
+}
+    
+)}
+        
+getTasks();
+
 
 
 
