@@ -116,18 +116,44 @@ saveButton.addEventListener('click', () => {
    
     })
    
-function getTasks(){
-    axios.get('http://127.0.0.1:8000/api/read').then((response)=>{
-        console.log(response.data);
-        document.getElementById('test').innerHTML = response.data.tasks;
+function getTasks() {
+    axios.get('http://127.0.0.1:8000/api/read').then((response) => {
+        if(response.data.tasks==[]){
+            document.getElementById('tasks').innerHTML = 'No Tasks for this user';
+        }
+        else{
+        const table = `
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Finish Date</th>
+                    <th>Given By</th>
+                    <th>Complete</th>
+                    <th>Updated At</th>
+                </tr>
+                ${response.data.tasks.map(item => `
+                    <tr>
+                        <td>${item.name}</td>
+                        <td>${item.description}</td>
+                        <td>${item.finish_date}</td>
+                        <td>${item.given_by}</td>
+                        <td>${item.complete}</td>
+                        <td>${item.updated_at}</td>
+                    </tr>
+                `)}
+            </table>`;
+        document.getElementById('tasks').innerHTML = table;
+    }
 })
-.catch((error)=>{
-    document.getElementById('test').innerHTML = 'Error fetching tasks. Please try again.';
-})
-}
-    
-getTasks();
+    .catch((error) => {
+        document.getElementById('tasks').innerHTML = 'Error fetching tasks. Please try again.';
+    });
 
+}
+
+    getTasks();
+    
 
 
 
@@ -141,8 +167,7 @@ cardDiv.appendChild(card1);
 
 
 
-let data = document.getElementById('data')
-document.body.appendChild(data);
+
 document.body.appendChild(container);
 document.body.appendChild(cardDiv);
 
