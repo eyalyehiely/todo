@@ -44,6 +44,7 @@ taskDiv.style.gap = '2vh';
 let name = document.createElement('input');
 name.placeholder = 'Name';
 name.id = 'name'
+name.type = 'string'
 
 let description = document.createElement('input');
 description.placeholder = 'Description';
@@ -103,7 +104,6 @@ saveButton.textContent = '✅' ;
 
 
 saveButton.addEventListener('click', () => {
-   
     axios.post('/api/create', {
         name: document.getElementById('name').value,
         description: document.getElementById('description').value,
@@ -117,23 +117,21 @@ saveButton.addEventListener('click', () => {
     .catch((error)  => {
     document.getElementById('create').innerHTML = 'Error transpassing tasks. Please try again.';
     })
-})
 
+    window.alert("Task added");
+    
+}) 
     card1.appendChild(saveButton);
     card1.appendChild(taskDiv);
     cardDiv.appendChild(card1);
-
-
+    
 }
-
-
 
 document.body.appendChild(container);
 document.body.appendChild(cardDiv);
 
 
-
-
+let tableDiv = document.createElement('div');
 
 function getTasks() {
     axios.get('http://127.0.0.1:8000/api/read').then((response) => {
@@ -141,7 +139,7 @@ function getTasks() {
             document.getElementById('tasks').innerHTML = 'No Tasks for this user';
         }
         else{
-            let tableDiv = document.createElement('div');
+            
             const table = `
                 <table>
                     <tr>
@@ -163,7 +161,7 @@ function getTasks() {
                             <td>${item.complete}</td>
                             <td>${item.updated_at}</td>
                             <td><button id="${item.id}" name='deleteButton'>🗑️</button></td>
-                            <td><button id="editButton_${item.id}" onclick="editTask(${item.id})">📝</button></td>
+                            <td><button id="${item.id}editButton" name="editButton">📝</button></td>
                         </tr>
                     `)}
                 </table>`;
@@ -174,13 +172,37 @@ function getTasks() {
 
             response.data.tasks.forEach(item => {
                 document.getElementById(item.id).addEventListener('click', () => {
-                    axios.get(`/api/delete/${item.id}`)
-                    location.reload()
+                    axios.get(`http://127.0.0.1:8000/api/delete/${item.id}`),
                     window.alert("Task deleted")
-                        })
-                        
-                });
             
+                })    
+            }) 
+        }
+                
+            response.data.tasks.forEach(item => {        
+            document.getElementById(`${item.id}editButton`).addEventListener('click',()=>{
+                let name1 = window.prompt('Insert new name');
+                name1.id = 'name1';
+                let description1 = window.prompt('Insert new description');
+                description1.id = 'description1';
+                
+                axios.get(`http://127.0.0.1:8000/api/update/${item.id}`),
+                    {
+                    name:name1,
+                    description:description1,
+                    // date: givenDate,
+                    // finishDate: finishDate,
+                    // givenBy: givenBy,
+                    // complete: complete,
+                    // updateAt: updatedAt,
+                    }
+                  
+                        window.alert("Task updated")
+                    
+                    })
+                })
+            
+            });
                 
             tableDiv.style.backgroundColor = 'gray';
             // document.getElementById('row').style.display='flex';
@@ -188,11 +210,10 @@ function getTasks() {
             // document.getElementById('row').style.gap='15px;'
         document.getElementById('tasks').appendChild(tableDiv);
    
-    };
-    })
-   
+    ;
 }
-
+   
+   
 
 
 

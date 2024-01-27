@@ -66,9 +66,9 @@ def createTask(request):
     if complete == '1':
         complete= True
     else:
-        complete =False
+        complete = False
     updateAt = json.loads(request.body)['updateAt']
-    task1 = Task.objects.create(name = name, description = description, given_date = date, finish_date = finishDate, given_by = givenBy,complete = complete,updated_at = updateAt,user_id = 1)
+    task1 = Task.objects.create(name = name, description = description, given_date = date, finish_date = finishDate, given_by = givenBy,complete = complete,updated_at = updateAt,user_id_id = request.user.id)
     task1.save()
     return JsonResponse({"status": "ok"})
 
@@ -101,3 +101,15 @@ def delete_task(request,task_id):
     except:
         return JsonResponse({"status":f"No such task with {task_id} id"})
 
+
+def update_task(request,task_id):
+    try:
+        task = Task.objects.get(id=task_id)
+        name1 = json.loads(request.body)['name1']
+        description1 = json.loads(request.body)['description1']
+        task.name = name1
+        task.description=description1
+        task.save()
+        return JsonResponse({'tasks':tasks_list})
+    except:
+        return JsonResponse({"status":f"No such task with {task_id} id"})
