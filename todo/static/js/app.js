@@ -152,7 +152,10 @@ function getTasks() {
                         <th>Delete</th>
                         <th>Edit</th>
                     </tr>
-                    ${response.data.tasks.map(item => `
+                    ${response.data.tasks.foreach(item => `
+                        ${document.getElementById(item.id).addEventListener('click', () => {
+                        axios.get(`/api/delete/${item.id}`
+                        }`
                         <tr>
                             <td>${item.name}</td>
                             <td>${item.description}</td>
@@ -167,16 +170,6 @@ function getTasks() {
                 </table>`;
             tableDiv.innerHTML = table;
             document.getElementById('tasks').appendChild(tableDiv);
-        
-            response.data.tasks.forEach(item => {
-                document.getElementById(item.id).addEventListener('click', () => {
-                    axios.get(`/api/delete/${item.id}`,{
-                        task_id:deleteButton.id,
-                    
-                    })
-                        })
-                        
-                });
            
             
             tableDiv.innerHTML = table
