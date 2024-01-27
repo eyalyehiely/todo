@@ -112,7 +112,9 @@ saveButton.addEventListener('click', () => {
         givenBy: document.getElementById('givenBy').value,
         complete: document.getElementById('complete').value,
         updateAt: document.getElementById('updatedAt').value,
-    }).catch((error)  => {
+       
+    })
+    .catch((error)  => {
     document.getElementById('create').innerHTML = 'Error transpassing tasks. Please try again.';
     })
 })
@@ -173,18 +175,22 @@ function getTasks() {
             response.data.tasks.forEach(item => {
                 document.getElementById(item.id).addEventListener('click', () => {
                     axios.get(`/api/delete/${item.id}`)
-                      
-                    
+                    location.reload()
+                    window.alert("Task deleted")
                         })
                         
                 });
+            
+                
             tableDiv.style.backgroundColor = 'gray';
             // document.getElementById('row').style.display='flex';
             // document.getElementById('row').style.flexDirection='row';
             // document.getElementById('row').style.gap='15px;'
         document.getElementById('tasks').appendChild(tableDiv);
+   
     };
     })
+   
 }
 
 

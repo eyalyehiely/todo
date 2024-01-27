@@ -68,7 +68,7 @@ def createTask(request):
     else:
         complete =False
     updateAt = json.loads(request.body)['updateAt']
-    task1 = Task.objects.create(name = name, description = description, given_date = date, finish_date = finishDate, given_by = givenBy,complete = complete,updated_at = updateAt,user_id = User.objects)
+    task1 = Task.objects.create(name = name, description = description, given_date = date, finish_date = finishDate, given_by = givenBy,complete = complete,updated_at = updateAt,user_id = 1)
     task1.save()
     return JsonResponse({"status": "ok"})
 
