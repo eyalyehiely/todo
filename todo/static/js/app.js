@@ -139,65 +139,59 @@ function getTasks() {
             document.getElementById('tasks').innerHTML = 'No Tasks for this user';
         }
         else{
-          let tableDiv = document.createElement('div')
-        const table = `
-            <table>
-                <tr>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Finish Date</th>
-                    <th>Given By</th>
-                    <th>Complete</th>
-                    <th>Updated At</th>
-                </tr>
-                ${response.data.tasks.map(item => `
-                <div id ='row'>
+            let tableDiv = document.createElement('div');
+            const table = `
+                <table>
                     <tr>
-                        <td>${item.name}</td>
-                        <td>${item.description}</td>
-                        <td>${item.finish_date}</td>
-                        <td>${item.given_by}</td>
-                        <td>${item.complete}</td>
-                        <td>${item.updated_at}</td>
-                        
-                        // <td><button id="{${item.id}}" name='deleteButton'>🗑️</button></td>
-                        <td><button id="edit" onclick="editTask(${item.id})">📝</button></td>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Finish Date</th>
+                        <th>Given By</th>
+                        <th>Complete</th>
+                        <th>Updated At</th>
+                        <th>Delete</th>
+                        <th>Edit</th>
                     </tr>
-                    </div>
-                `)}
-            </table>`;
+                    ${response.data.tasks.map(item => `
+                        <tr>
+                            <td>${item.name}</td>
+                            <td>${item.description}</td>
+                            <td>${item.finish_date}</td>
+                            <td>${item.given_by}</td>
+                            <td>${item.complete}</td>
+                            <td>${item.updated_at}</td>
+                            <td><button id="${item.id}" name='deleteButton'>🗑️</button></td>
+                            <td><button id="editButton_${item.id}" onclick="editTask(${item.id})">📝</button></td>
+                        </tr>
+                    `)}
+                </table>`;
+            tableDiv.innerHTML = table;
+            document.getElementById('tasks').appendChild(tableDiv);
+        
+            response.data.tasks.forEach(item => {
+                document.getElementById(item.id).addEventListener('click', () => {
+                    axios.get(`/api/delete/${item.id}`,{
+                        task_id:deleteButton.id,
+                    
+                    })
+                        })
+                        
+                });
+           
+            
             tableDiv.innerHTML = table
             tableDiv.style.backgroundColor = 'gray';
             // document.getElementById('row').style.display='flex';
             // document.getElementById('row').style.flexDirection='row';
             // document.getElementById('row').style.gap='15px;'
         document.getElementById('tasks').appendChild(tableDiv);
-    }
-})
-    .catch((error) => {
-        document.getElementById('tasks').innerHTML = 'Error loading tasks. Please try again.';
-    });
-
+    };
+    })
 }
+
+
+
 
 getTasks();
     
-
-// delete button
-document.getElementsById(`${item.id}`).addEventListener('click',()=> {
-    axios.get(`/api/delete/${task_id}`,{
-        task_id:deleteButton.id
-    })
-
-    })
-
-    
-
-
-
-
-
-
-
-
 
