@@ -132,7 +132,6 @@ document.body.appendChild(cardDiv);
 
 
 
-
 function getTasks() {
     axios.get('http://127.0.0.1:8000/api/read').then((response) => {
         if(response.data.tasks.length==0){
@@ -140,6 +139,24 @@ function getTasks() {
         }
         else{
             let tableDiv = document.createElement('div');
+            let tableRows = '';
+            response.data.tasks.forEach(item => {
+                console.log(item);
+                tableRows += `
+                    <tr>
+                        <td>${item.name}</td>
+                        <td>${item.description}</td>
+                        <td>${item.finish_date}</td>
+                        <td>${item.given_by}</td>
+                        <td>${item.complete}</td>
+                        <td>${item.updated_at}</td>
+                        <td><button id="${item.id}" name='deleteButton'>🗑️</button></td>
+                        <td><button id="editButton_${item.id}" onclick="editTask(${item.id})">📝</button></td>
+                    </tr>
+                `;
+            });
+
+
             const table = `
                 <table>
                     <tr>
@@ -152,39 +169,27 @@ function getTasks() {
                         <th>Delete</th>
                         <th>Edit</th>
                     </tr>
-                    ${response.data.tasks.foreach(item => `
-                        ${document.getElementById(item.id).addEventListener('click', () => {
-                        axios.get(`/api/delete/${item.id}`
-                        }`
-                        <tr>
-                            <td>${item.name}</td>
-                            <td>${item.description}</td>
-                            <td>${item.finish_date}</td>
-                            <td>${item.given_by}</td>
-                            <td>${item.complete}</td>
-                            <td>${item.updated_at}</td>
-                            <td><button id="${item.id}" name='deleteButton'>🗑️</button></td>
-                            <td><button id="editButton_${item.id}" onclick="editTask(${item.id})">📝</button></td>
-                        </tr>
-                    `)}
-                </table>`;
+                    ${tableRows}
+                </table>
+            `;
+
             tableDiv.innerHTML = table;
             document.getElementById('tasks').appendChild(tableDiv);
-           
-            
-            tableDiv.innerHTML = table
+            for (let i = 0; i < response.data.tasks.length; i++) {
+                document.getElementById(response.data.tasks[i].id).addEventListener('click', () => {
+                    axios.get(`http://127.0.0.1:8000/api/delete/${response.data.tasks[i].id}`)
+                        .then((response) => {
+                            document.getElementById('tasks').innerHTML = '';
+                            getTasks();
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        })
+                })
+            }
             tableDiv.style.backgroundColor = 'gray';
-            // document.getElementById('row').style.display='flex';
-            // document.getElementById('row').style.flexDirection='row';
-            // document.getElementById('row').style.gap='15px;'
-        document.getElementById('tasks').appendChild(tableDiv);
-    };
+        }
     })
 }
 
-
-
-
 getTasks();
-    
-
