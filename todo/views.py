@@ -80,8 +80,9 @@ def get_tasks(request):
     tasks = Task.objects.filter(user_id=current_user_id)
     for task in tasks:
        task_data ={
+        'id':task.id,
        "name":task.name,
-       'description':task.given_date,
+       'description':task.description,
        'finish_date':task.finish_date,
        'given_by':task.given_by,
        'complete':task.complete,
