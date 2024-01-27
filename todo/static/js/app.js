@@ -112,20 +112,14 @@ saveButton.addEventListener('click', () => {
         givenBy: document.getElementById('givenBy').value,
         complete: document.getElementById('complete').value,
         updateAt: document.getElementById('updatedAt').value,
+    }).catch((error)  => {
+    document.getElementById('create').innerHTML = 'Error transpassing tasks. Please try again.';
     })
-   
-    })
+})
+
     card1.appendChild(saveButton);
     card1.appendChild(taskDiv);
     cardDiv.appendChild(card1);
-
-
-
-
-
-
-
-
 
 
 }
@@ -138,13 +132,14 @@ document.body.appendChild(cardDiv);
 
 
 
+
 function getTasks() {
     axios.get('http://127.0.0.1:8000/api/read').then((response) => {
         if(response.data.tasks.length==0){
             document.getElementById('tasks').innerHTML = 'No Tasks for this user';
         }
         else{
-           
+          let tableDiv = document.createElement('div')
         const table = `
             <table>
                 <tr>
@@ -156,6 +151,7 @@ function getTasks() {
                     <th>Updated At</th>
                 </tr>
                 ${response.data.tasks.map(item => `
+                <div id ='row'>
                     <tr>
                         <td>${item.name}</td>
                         <td>${item.description}</td>
@@ -163,17 +159,23 @@ function getTasks() {
                         <td>${item.given_by}</td>
                         <td>${item.complete}</td>
                         <td>${item.updated_at}</td>
-                        <input type="hidden" name="id" value="{${item.id}}">
-                        <td><button id="{${item.id}}" name='deleteButton onclick= ${deleteTask(item.id)}">🗑️</button></td>
+                        
+                        // <td><button id="{${item.id}}" name='deleteButton'>🗑️</button></td>
                         <td><button id="edit" onclick="editTask(${item.id})">📝</button></td>
                     </tr>
+                    </div>
                 `)}
             </table>`;
-        document.getElementById('tasks').innerHTML = table;
+            tableDiv.innerHTML = table
+            tableDiv.style.backgroundColor = 'gray';
+            // document.getElementById('row').style.display='flex';
+            // document.getElementById('row').style.flexDirection='row';
+            // document.getElementById('row').style.gap='15px;'
+        document.getElementById('tasks').appendChild(tableDiv);
     }
 })
     .catch((error) => {
-        document.getElementById('tasks').innerHTML = 'Error fetching tasks. Please try again.';
+        document.getElementById('tasks').innerHTML = 'Error loading tasks. Please try again.';
     });
 
 }
@@ -181,15 +183,16 @@ function getTasks() {
 getTasks();
     
 
-
-function deleteTask() {
-    axios.get('http://127.0.0.1:8000/api/delete/task_id').then((response)=>{
-        response.data.tasks
+// delete button
+document.getElementsById(`${item.id}`).addEventListener('click',()=> {
+    axios.get(`/api/delete/${task_id}`,{
+        task_id:deleteButton.id
+    })
 
     })
 
     
-}
+
 
 
 
