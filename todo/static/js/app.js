@@ -145,10 +145,12 @@ function getTasks() {
                     <tr>
                         <th>Name</th>
                         <th>Description</th>
+                        <th>Given Date</th>
                         <th>Finish Date</th>
                         <th>Given By</th>
                         <th>Complete</th>
                         <th>Updated At</th>
+                        <th>Share With</th>
                         <th>Delete</th>
                         <th>Edit</th>
                     </tr>
@@ -156,10 +158,12 @@ function getTasks() {
                         <tr>
                             <td>${item.name}</td>
                             <td>${item.description}</td>
+                            <td>${item.given_date}</td>
                             <td>${item.finish_date}</td>
                             <td>${item.given_by}</td>
                             <td>${item.complete}</td>
                             <td>${item.updated_at}</td>
+                            <td>👥</td>
                             <td><button id="${item.id}" name='deleteButton'>🗑️</button></td>
                             <td><button id="${item.id}editButton" name="editButton">📝</button></td>
                         </tr>
@@ -172,8 +176,11 @@ function getTasks() {
 
             response.data.tasks.forEach(item => {
                 document.getElementById(item.id).addEventListener('click', () => {
-                    axios.get(`http://127.0.0.1:8000/api/delete/${item.id}`),
-                    window.alert("Task deleted")
+                    axios.get(`http://127.0.0.1:8000/api/delete/${item.id}`).then(()=>{
+                        window.alert("Task deleted")
+                        getTasks()
+                    })
+                    
             
                 })    
             }) 
@@ -204,10 +211,6 @@ function getTasks() {
             
             });
                 
-            tableDiv.style.backgroundColor = 'gray';
-            // document.getElementById('row').style.display='flex';
-            // document.getElementById('row').style.flexDirection='row';
-            // document.getElementById('row').style.gap='15px;'
         document.getElementById('tasks').appendChild(tableDiv);
    
     ;

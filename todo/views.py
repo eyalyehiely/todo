@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from .models import Task
 from django.http import JsonResponse
 import json
+import datetime
 
 
 def login(request):
@@ -59,10 +60,9 @@ def register(request):
 def createTask(request):
     name = json.loads(request.body)['name']
     description = json.loads(request.body)['description']
-    date = json.loads(request.body)['date']
+    date = datetime.datetime.now()
     finishDate = json.loads(request.body)['finishDate']
     givenBy = json.loads(request.body)['givenBy']
-    complete = json.loads(request.body)['complete']
     complete = False
     updateAt = json.loads(request.body)['updateAt']
     task1 = Task.objects.create(name = name, description = description, given_date = date, finish_date = finishDate, given_by = givenBy,complete = complete,updated_at = updateAt,user_id_id = request.user.id)

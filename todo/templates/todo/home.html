@@ -7,11 +7,11 @@
     <title>Home</title>
     <script src="{% static "js/app.js" %}" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    
+    <link rel="stylesheet" href="{% static '/todo/home.css' %}">
 
 </head>
 <body>
-   <h4 id="hello">{{username}}'s TO DO LIST</h4> 
+   <h1 id="hello">{{username}}'s TO DO LIST</h1> 
    <div id="create"></div>
     <div id="tasks"></div>
     <div id="update"></div>
