@@ -3,7 +3,7 @@
 let container = document.createElement('div');
 let plusButton = document.createElement('button');
 plusButton.id = 'plus';
-plusButton.textContent = '➕'
+plusButton.textContent = 'Create a new task ➕'
 
 container.appendChild(document.getElementById('hello'));
 container.appendChild(plusButton);
@@ -53,7 +53,7 @@ updatedAt.id ='updatedAt';
 updatedAt.type = 'date';
 
 
-let executeBy = document.createElement('select');
+let executeBy = document.createElement('input');
 executeBy.placeholder = 'Execute By';
 executeBy.id = 'executeBy';
 
@@ -91,13 +91,15 @@ saveButton.addEventListener('click', () => {
         executeBy:document.getElementById('executeBy').value,  
   
     }).then(() =>{
-    getTasks
+    location.reload()
     window.alert("Task added");
     plusButton.disabled = false;
+    card1.style.display='none';
     })
     .catch((error)  => {
     document.getElementById('create').innerHTML = 'Error transpassing tasks. Please try again.';
     })
+   
     
 }) 
     card1.appendChild(saveButton);
