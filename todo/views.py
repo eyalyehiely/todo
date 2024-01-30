@@ -63,13 +63,14 @@ def createTask(request):
     date = datetime.datetime.now()
     finishDate = json.loads(request.body)['finishDate']
     givenBy = request.user.username
+    execute_by =json.loads(request.body)['execute']
     complete = False
     updateAt = datetime.datetime.now()
     task1 = Task.objects.create(name = name, description = description, given_date = date, finish_date = finishDate, given_by = givenBy,complete = complete,updated_at = updateAt,user_id_id = request.user.id)
     task1.save()
     return JsonResponse({"status": "ok"})
 
-# get all tasks per user
+# get all tasks per user(read)
 def get_tasks(request):
    
     current_user_id = request.user.id
@@ -83,6 +84,7 @@ def get_tasks(request):
        'given_date':task.given_date,
        'finish_date':task.finish_date,
        'given_by':task.given_by,
+       'execute_by':task.execute_by,
        'complete':task.complete,
        'updated_at':task.updated_at
        }
@@ -113,3 +115,8 @@ def update_task(request,task_id):
         return JsonResponse({'updated_task':task})
     except:
         return JsonResponse({"status":f"No such task with {task_id} id"})
+    
+
+
+def share_task():
+    pass

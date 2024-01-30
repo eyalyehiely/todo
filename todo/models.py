@@ -11,3 +11,4 @@ class Task(models.Model):
     updated_at= models.DateTimeField()
     user_id = models.ForeignKey(User,on_delete = models.CASCADE)
     share_with = models.TextField(max_length = 20)
+    execute_by = models.TextField(max_length=100)

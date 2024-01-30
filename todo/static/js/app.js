@@ -53,10 +53,17 @@ updatedAt.id ='updatedAt';
 updatedAt.type = 'date';
 
 
+let executeBy = document.createElement('select');
+executeBy.placeholder = 'Execute By';
+executeBy.id = 'executeBy';
+
+
 //appending inputs
 taskDiv.appendChild(name);
 taskDiv.appendChild(description);
+taskDiv.appendChild(executeBy);
 taskDiv.appendChild(finishDate);
+
 
 
 
@@ -80,7 +87,9 @@ saveButton.addEventListener('click', () => {
     axios.post('/api/create', {
         name: document.getElementById('name').value,
         description: document.getElementById('description').value,
-        finishDate: document.getElementById('finishDate').value,       
+        finishDate: document.getElementById('finishDate').value,  
+        executeBy:document.getElementById('executeBy').value,  
+  
     }).then(() =>{
     getTasks
     window.alert("Task added");
@@ -118,11 +127,12 @@ function getTasks() {
                         <th>Given Date</th>
                         <th>Finish Date</th>
                         <th>Given By</th>
+                        <th>Execute By</th>
                         <th>Complete</th>
                         <th>Updated At</th>
                         <th>Share With</th>
                         <th>Delete</th>
-                        <th>Edit</th>
+                        <th>Edit Status</th>
                     </tr>
                     ${response.data.tasks.map(item => `
                         <tr>
@@ -131,6 +141,7 @@ function getTasks() {
                             <td>${item.given_date}</td>
                             <td>${item.finish_date}</td>
                             <td>${item.given_by}</td>
+                            <td>contacts!!!</td>
                             <td>${item.complete}</td>
                             <td>${item.updated_at}</td>
                             <td>👥</td>
