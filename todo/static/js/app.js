@@ -45,13 +45,6 @@ finishDate.type='date';
 finishDate.placeholder = 'Finish Date';
 finishDate.id ='finishDate'
 
-let givenBy = document.createElement('input');
-givenBy.placeholder = 'Given by';
-givenBy.id ='givenBy'
-
-
-
-
 
 
 let updatedAt = document.createElement('input');
@@ -63,11 +56,9 @@ updatedAt.type = 'date';
 //appending inputs
 taskDiv.appendChild(name);
 taskDiv.appendChild(description);
-taskDiv.appendChild(givenDate);
 taskDiv.appendChild(finishDate);
-taskDiv.appendChild(givenBy);
-taskDiv.appendChild(complete);
-taskDiv.appendChild(updatedAt);
+
+
 
 // styling
 card1.style.width = '40vw';
@@ -90,12 +81,14 @@ saveButton.addEventListener('click', () => {
         name: document.getElementById('name').value,
         description: document.getElementById('description').value,
         finishDate: document.getElementById('finishDate').value,       
+    }).then(() =>{
+    getTasks
+    window.alert("Task added");
+    plusButton.disabled = false;
     })
     .catch((error)  => {
     document.getElementById('create').innerHTML = 'Error transpassing tasks. Please try again.';
     })
-
-    window.alert("Task added");
     
 }) 
     card1.appendChild(saveButton);
@@ -161,37 +154,29 @@ function getTasks() {
             
                 })    
             }) 
-        }
+       
                 
             response.data.tasks.forEach(item => {        
             document.getElementById(`${item.id}editButton`).addEventListener('click',()=>{
-                let name1 = window.prompt('Insert new name');
-                name1.id = 'name1';
-                let description1 = window.prompt('Insert new description');
-                description1.id = 'description1';
+                let complete = window.prompt('Insert task status');
                 
-                axios.get(`http://127.0.0.1:8000/api/update/${item.id}`),
+                axios.get(`http://127.0.0.1:8000/api/update/${item.id}`,
                     {
-                    name:name1,
-                    description:description1,
-                    // date: givenDate,
-                    // finishDate: finishDate,
-                    // givenBy: givenBy,
-                    // complete: complete,
-                    // updateAt: updatedAt,
-                    }
                   
+                    complete: complete,
+                    })
                         window.alert("Task updated")
                     
                     })
                 })
-            
+        }
             });
                 
         document.getElementById('tasks').appendChild(tableDiv);
    
     ;
 }
+
    
    
 

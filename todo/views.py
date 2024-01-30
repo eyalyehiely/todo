@@ -62,7 +62,7 @@ def createTask(request):
     description = json.loads(request.body)['description']
     date = datetime.datetime.now()
     finishDate = json.loads(request.body)['finishDate']
-    givenBy = request.user.id
+    givenBy = request.user.username
     complete = False
     updateAt = datetime.datetime.now()
     task1 = Task.objects.create(name = name, description = description, given_date = date, finish_date = finishDate, given_by = givenBy,complete = complete,updated_at = updateAt,user_id_id = request.user.id)
@@ -107,7 +107,7 @@ def update_task(request,task_id):
         if complete.lower() == 'true':
             complete == True
         else:
-             complete ==False
+            complete ==False
         task.complete = complete
         task.save()
         return JsonResponse({'updated_task':task})
