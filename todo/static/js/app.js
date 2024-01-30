@@ -11,19 +11,8 @@ container.appendChild(plusButton);
 // add cards functions
 plusButton.addEventListener('click',()=>{
     createCard();
+    plusButton.disabled=true;
 })
-
-// deleteButton.addEventListener('click',()=>{
-//     axios.get(`http://127.0.0.1:8000/delete?id={{user.id}}`).then((response)=>{
-        
-//     })
-// //     <form action="/delete" method="GET" id='deleteForm'>
-// //     <input type="hidden" name="id" value="{{contact.id}}">
-// // </form>
-// })
-
-
-
 
 
 
@@ -50,10 +39,6 @@ let description = document.createElement('input');
 description.placeholder = 'Description';
 description.id = 'description'
 
-let givenDate = document.createElement('input');
-givenDate.placeholder = 'Date';
-givenDate.type = 'date';
-givenDate.id ='givenDate'
 
 let finishDate = document.createElement('input');
 finishDate.type='date';
@@ -64,13 +49,10 @@ let givenBy = document.createElement('input');
 givenBy.placeholder = 'Given by';
 givenBy.id ='givenBy'
 
-let complete = document.createElement('input');
-complete.id= 'complete';
-complete.type='checkbox';
-complete.value = '1';
 
 
-complete.placeholder = 'Complete';
+
+
 
 let updatedAt = document.createElement('input');
 updatedAt.placeholder = 'Updated_at';
@@ -107,12 +89,7 @@ saveButton.addEventListener('click', () => {
     axios.post('/api/create', {
         name: document.getElementById('name').value,
         description: document.getElementById('description').value,
-        date: document.getElementById('givenDate').value,
-        finishDate: document.getElementById('finishDate').value,
-        givenBy: document.getElementById('givenBy').value,
-        complete: document.getElementById('complete').value,
-        updateAt: document.getElementById('updatedAt').value,
-       
+        finishDate: document.getElementById('finishDate').value,       
     })
     .catch((error)  => {
     document.getElementById('create').innerHTML = 'Error transpassing tasks. Please try again.';

@@ -62,24 +62,25 @@ def createTask(request):
     description = json.loads(request.body)['description']
     date = datetime.datetime.now()
     finishDate = json.loads(request.body)['finishDate']
-    givenBy = json.loads(request.body)['givenBy']
+    givenBy = request.user.id
     complete = False
-    updateAt = json.loads(request.body)['updateAt']
+    updateAt = datetime.datetime.now()
     task1 = Task.objects.create(name = name, description = description, given_date = date, finish_date = finishDate, given_by = givenBy,complete = complete,updated_at = updateAt,user_id_id = request.user.id)
     task1.save()
     return JsonResponse({"status": "ok"})
 
 # get all tasks per user
 def get_tasks(request):
-    global tasks_list
+   
     current_user_id = request.user.id
     tasks_list=[]
     tasks = Task.objects.filter(user_id=current_user_id)
     for task in tasks:
        task_data ={
-        'id':task.id,
+       'id':task.id,
        "name":task.name,
        'description':task.description,
+       'given_date':task.given_date,
        'finish_date':task.finish_date,
        'given_by':task.given_by,
        'complete':task.complete,
@@ -94,19 +95,21 @@ def delete_task(request,task_id):
     try:
         task = Task.objects.filter(id=task_id)
         task.delete()
-        return JsonResponse({'tasks':tasks_list})
+        return JsonResponse({'deleted_task':task})
     except:
         return JsonResponse({"status":f"No such task with {task_id} id"})
 
 
 def update_task(request,task_id):
     try:
-        task = Task.objects.get(id=task_id)
-        name1 = json.loads(request.body)['name1']
-        description1 = json.loads(request.body)['description1']
-        task.name = name1
-        task.description=description1
+        task = Task.objects.filter(id=task_id)
+        complete = json.loads(request.body)['complete']
+        if complete.lower() == 'true':
+            complete == True
+        else:
+             complete ==False
+        task.complete = complete
         task.save()
-        return JsonResponse({'tasks':tasks_list})
+        return JsonResponse({'updated_task':task})
     except:
         return JsonResponse({"status":f"No such task with {task_id} id"})
