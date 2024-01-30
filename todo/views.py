@@ -23,7 +23,7 @@ def login(request):
     else:
         auth_login(request, user)
         request.session['username'] = username
-        return render(request=request,template_name='todo/home.html',context={'username':username})
+        return render(request=request,template_name='todo/home.html',context={'username':username.upper()})
 
 
 @login_required(login_url='login/')
