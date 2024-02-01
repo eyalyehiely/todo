@@ -5,7 +5,7 @@ let plusButton = document.createElement('button');
 plusButton.id = 'plus';
 plusButton.textContent = 'Create a new task ➕'
 
-container.appendChild(document.getElementById('hello'));
+container.appendChild(document.getElementById('plus'));
 container.appendChild(plusButton);
 
 // add cards functions
@@ -17,18 +17,9 @@ plusButton.addEventListener('click',()=>{
 
 
 let cardDiv = document.createElement('div');
-cardDiv.style.display = 'flex';
-cardDiv.style.flexDirection = 'row'
-cardDiv.style.gap = '3vw';
 
 function createCard(){
     // creating new card
-// let card1 = document.createElement('div');
-let taskDiv = document.createElement('div');
-
-taskDiv.style.marginTop='10px';
-taskDiv.style.marginLeft='10px';
-taskDiv.style.gap = '2vh';
 
 let name = document.createElement('input');
 name.placeholder = 'Name';
@@ -46,32 +37,25 @@ finishDate.placeholder = 'Finish Date';
 finishDate.id ='finishDate'
 
 
-
-// let updatedAt = document.createElement('input');
-// updatedAt.placeholder = 'Updated_at';
-// updatedAt.id ='updatedAt';
-// updatedAt.type = 'date';
-
-
 let executeBy = document.createElement('input');
 executeBy.placeholder = 'Execute By';
 executeBy.id = 'executeBy';
 
 
 //appending inputs
-taskDiv.appendChild(name);
-taskDiv.appendChild(description);
-taskDiv.appendChild(executeBy);
-taskDiv.appendChild(finishDate);
+cardDiv.appendChild(name);
+cardDiv.appendChild(description);
+cardDiv.appendChild(executeBy);
+cardDiv.appendChild(finishDate);
 
 
 
 
 // styling
-card1.style.width = '40vw';
-card1.style.height = '30vh';
-card1.style.border = '1px solid silver';
-card1.style.backgroundColor='ghostwhite';
+cardDiv.style.width = '40vw';
+cardDiv.style.height = '30vh';
+cardDiv.style.border = '1px solid silver';
+cardDiv.style.backgroundColor='ghostwhite';
 
 
 
@@ -91,10 +75,10 @@ saveButton.addEventListener('click', () => {
         executeBy:document.getElementById('executeBy').value,  
   
     }).then(() =>{
-    location.reload()
-    window.alert("Task added");
-    plusButton.disabled = false;
-    card1.style.display='none';
+        location.reload()
+        window.alert("Task added");
+        plusButton.disabled = false;
+        card1.style.display='none';
     })
     .catch((error)  => {
     document.getElementById('create').innerHTML = 'Error transpassing tasks. Please try again.';
@@ -102,9 +86,8 @@ saveButton.addEventListener('click', () => {
    
     
 }) 
-    card1.appendChild(saveButton);
-    card1.appendChild(taskDiv);
-    cardDiv.appendChild(card1);
+    cardDiv.appendChild(saveButton);
+    
     
 }
 
