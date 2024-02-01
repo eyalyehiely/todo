@@ -25,11 +25,14 @@ td button {
     font-size: 16px;
 }
 
-/* Optional: Add some hover effects for buttons */
-td button:hover {
-    color: red; /* or any other color */
-}
+
 
 tr:hover{
     background-color: #ddd;
+    /* text-shadow: 2px 2px; */
 }
+
+.plus{
+    box-shadow: 10px 10px 5px 12px lightgray;
+}
+

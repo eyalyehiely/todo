@@ -35,6 +35,11 @@ let finishDate = document.createElement('input');
 finishDate.type='date';
 finishDate.placeholder = 'Finish Date';
 finishDate.id ='finishDate'
+let currentDate = new Date();
+finishDate.min = currentDate.toLocaleString();
+
+
+
 
 
 let executeBy = document.createElement('input');
@@ -52,10 +57,18 @@ cardDiv.appendChild(finishDate);
 
 
 // styling
-cardDiv.style.width = '40vw';
+cardDiv.style.width = '50vw';
 cardDiv.style.height = '30vh';
 cardDiv.style.border = '1px solid silver';
 cardDiv.style.backgroundColor='ghostwhite';
+cardDiv.style.boxShadow= '5px 5px 5px 5px lightgray';
+cardDiv.style.display ='flex';
+cardDiv.style.flexDirection ='column';
+cardDiv.style.gap = '1em';
+cardDiv.style.maxWidth='200px';
+
+
+
 
 
 
@@ -66,7 +79,7 @@ saveButton.textContent = '✅' ;
 
 
 
-
+// save button actions
 saveButton.addEventListener('click', () => {
     axios.post('/api/create', {
         name: document.getElementById('name').value,
@@ -97,6 +110,7 @@ document.body.appendChild(cardDiv);
 
 let tableDiv = document.createElement('div');
 
+// get all tasks for the connecting user.
 function getTasks() {
     axios.get('http://127.0.0.1:8000/api/read').then((response) => {
         if(response.data.tasks.length==0){
@@ -175,9 +189,4 @@ function getTasks() {
 
    
    
-
-
-
 getTasks();
-    
-
