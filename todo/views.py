@@ -66,7 +66,7 @@ def createTask(request):
     execute_by =json.loads(request.body)['executeBy']
     complete = False
     updateAt = datetime.datetime.now()
-    task1 = Task.objects.create(name = name, description = description, given_date = date, finish_date = finishDate, given_by = givenBy,complete = complete,updated_at = updateAt,user_id_id = request.user.id)
+    task1 = Task.objects.create(name = name, description = description, given_date = date, finish_date = finishDate,execute_by=execute_by, given_by = givenBy,complete = complete,updated_at = updateAt,user_id_id = request.user.id)
     task1.save()
     return JsonResponse({"status": "ok"})
 

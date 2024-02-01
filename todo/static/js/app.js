@@ -23,7 +23,7 @@ cardDiv.style.gap = '3vw';
 
 function createCard(){
     // creating new card
-let card1 = document.createElement('div');
+// let card1 = document.createElement('div');
 let taskDiv = document.createElement('div');
 
 taskDiv.style.marginTop='10px';
@@ -47,10 +47,10 @@ finishDate.id ='finishDate'
 
 
 
-let updatedAt = document.createElement('input');
-updatedAt.placeholder = 'Updated_at';
-updatedAt.id ='updatedAt';
-updatedAt.type = 'date';
+// let updatedAt = document.createElement('input');
+// updatedAt.placeholder = 'Updated_at';
+// updatedAt.id ='updatedAt';
+// updatedAt.type = 'date';
 
 
 let executeBy = document.createElement('input');
@@ -143,7 +143,7 @@ function getTasks() {
                             <td>${item.given_date}</td>
                             <td>${item.finish_date}</td>
                             <td>${item.given_by}</td>
-                            <td>contacts!!!</td>
+                            <td>${item.execute_by}</td>
                             <td>${item.complete}</td>
                             <td>${item.updated_at}</td>
                             <td>👥</td>
@@ -179,7 +179,7 @@ function getTasks() {
                     complete: complete,
                     })
                         window.alert("Task updated")
-                    
+                        getTasks()
                     })
                 })
         }
