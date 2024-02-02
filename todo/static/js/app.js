@@ -1,18 +1,7 @@
 
-// plus button
 let container = document.createElement('div');
-let plusButton = document.createElement('button');
-plusButton.id = 'plus';
-plusButton.textContent = 'Create a new task ➕'
 
 container.appendChild(document.getElementById('plus'));
-container.appendChild(plusButton);
-
-// add cards functions
-plusButton.addEventListener('click',()=>{
-    createCard();
-    plusButton.disabled=true;
-})
 
 
 
@@ -39,13 +28,14 @@ finishDate.id ='finishDate';
 let currentDate = new Date();
 finishDate.min = currentDate.toLocaleString();
 
-
-
-
-
 let executeBy = document.createElement('input');
 executeBy.placeholder = 'Execute By';
 executeBy.id = 'executeBy';
+
+// save button
+let saveButton = document.createElement('button');
+saveButton.id = 'save';
+saveButton.textContent = '✅' ;
 
 
 // executeBy.addEventListener('click',()=>{
@@ -62,11 +52,6 @@ executeBy.id = 'executeBy';
 
 
 
-
-
-
-
-
 //appending inputs
 cardDiv.appendChild(name);
 cardDiv.appendChild(description);
@@ -78,28 +63,35 @@ cardDiv.appendChild(finishDate);
 
 
 // styling
-cardDiv.style.width = '50vw';
-cardDiv.style.height = '30vh';
-cardDiv.style.marginLeft = '20vw';
+cardDiv.style.marginTop='3vh';
+cardDiv.style.width = '20vw';
+cardDiv.style.height = '24vh';
+cardDiv.style.marginLeft = '10vw';
 cardDiv.style.border = '1px solid silver';
-cardDiv.style.backgroundColor='ghostwhite';
+cardDiv.style.backgroundColor='#dddddd';
 cardDiv.style.boxShadow= '5px 5px 5px 5px lightgray';
 cardDiv.style.display ='flex';
 cardDiv.style.flexDirection ='column';
 cardDiv.style.gap = '1em';
-cardDiv.style.maxWidth='170px';
+
+// row styling
+name.style.marginTop='1vh';
+name.style.marginLeft='1vw';
+name.style.marginRight='1vw';
+description.style.marginLeft='1vw';
+description.style.marginRight='1vw';
+executeBy.style.marginLeft='1vw';
+executeBy.style.marginRight='1vw';
+finishDate.style.marginLeft='1vw';
+finishDate.style.marginRight='1vw';
+t.style.marginLeft='1vw';
+saveButton.style.marginLeft='1vw';
+saveButton.style.marginRight='1vw';
 
 
 
 
 
-
-
-
-// save button
-let saveButton = document.createElement('button');
-saveButton.id = 'save';
-saveButton.textContent = '✅' ;
 
 
 

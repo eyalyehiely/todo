@@ -1,4 +1,9 @@
 
+h1{
+    text-align: center;
+    text-decoration:underline;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -6,7 +11,7 @@ table {
 }
 
 th, td {
-    border: 1px solid #ddd;
+    border: 2px solid black;
     padding: 8px;
     text-align: center;
 }
@@ -28,7 +33,7 @@ td button {
 
 
 tr:hover{
-    background-color: #ddd;
+    background-color: #dddddd;
     /* text-shadow: 2px 2px; */
 }
 
@@ -36,3 +41,6 @@ tr:hover{
     box-shadow: 10px 10px 5px 12px lightgray;
 }
 
+/* body{
+    background: linear-gradient(to bottom, #004cff, #007bff, #3a00cc);
+} */

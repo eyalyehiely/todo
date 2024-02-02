@@ -8,17 +8,20 @@
     <script src="{% static "js/app.js" %}" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="{% static 'todo/home.css/' %}">
-
+<script>
+    plusButton.disabled = true
+</script>
 
 </head>
 <body>
-    
-   <h1 id="plus">{{username}}'s TO DO LIST</h1> 
-   <h4 id="plus">My Tasks:</h4> 
+    <h1 id=" title">{{username}}'s TO DO LIST</h1>
+    <div id="plusButton"> <button onclick="createCard()"> Create a new task ➕</button></div>
+   
+    <div id="plus"><div>
     <div id="create"></div>
   
     <div id="tasks"></div>
-    <div id="update"></div>
+
    
     
     
