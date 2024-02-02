@@ -1,19 +1,24 @@
+{% load static %}
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
-<link rel="stylesheet" href = '/warehouse_project/warehouse/static/warehouse/register.css'>
+<link rel="stylesheet" href="{% static 'todo/register.css' %}">
 
 <script>
-  
+  function validateCreate(){
+    if(document.getElementById('username').value==''){
+      message.innerHTML="Please fill out the name (name and last name)";
+      document.getElementById('username').style.backgroundColor='pink';
+    }
+  }
 </script>
 
 
 <title>Register</title>
-<div class="container" style="justify-content: center;">
-<h3>TO-DO</h3>
+<h3 id="headline">TO-DO</h3>
 <hr>
-</div>
+
 
 
 <div class="card bg-light">
@@ -38,14 +43,14 @@
 
     <input type="email" name="email" class="form-control" required autofocus placeholder="Email">
 
-    </div> <!-- form-group// -->
+    </div> 
     
     
     <div class="form-group input-group">
     	<div class="input-group-prepend">
 		    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
 		</div>
-    <input type="text" name="username" required autofocus placeholder="Create Username" class="form-control">
+    <input type="text" name="username" id="username" required autofocus placeholder="Create Username" class="form-control">
        
     </div> 
     <div class="form-group input-group">
@@ -71,7 +76,7 @@
 All rights saved to Eyal Yehiely 2023 (c)
 </div>
 </article>
-  <link rel="stylesheet" href="/static/register.css">
+ 
 </head>
 <body>
 

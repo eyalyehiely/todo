@@ -4,43 +4,45 @@ function exit(){
 }
 
 
-let container = document.createElement('div');
-
-container.appendChild(document.getElementById('plus'));
-
-
-
-let cardDiv = document.createElement('div');
+const cardDiv = document.createElement('div');
+cardDiv.id = 'cardDiv'
 
 function createCard(){
     // creating new card
 
-let name = document.createElement('input');
-name.placeholder = 'Name';
-name.id = 'name'
-name.type = 'string'
+    const name = document.createElement('input');
+    name.placeholder = 'Name';
+    name.id = 'name'
+    name.type = 'string'
 
-let description = document.createElement('input');
-description.placeholder = 'Description';
-description.id = 'description'
+    const description = document.createElement('input');
+    description.placeholder = 'Description';
+    description.id = 'description'
 
 
-let finishDate = document.createElement('input');
-finishDate.type='date';
-let t = document.createElement('span');
-t.textContent = 'Finish date'
-finishDate.id ='finishDate';
-let currentDate = new Date();
-finishDate.min = currentDate.toLocaleString();
+    const finishDate = document.createElement('input');
+    finishDate.type='date';
+    const t = document.createElement('span');
+    t.textContent = 'Finish date';
+    finishDate.id ='finishDate';
+    const currentDate = new Date();
+    finishDate.min = currentDate.toLocaleString();
 
-let executeBy = document.createElement('input');
-executeBy.placeholder = 'Execute By';
-executeBy.id = 'executeBy';
+    const executeBy = document.createElement('input');
+    executeBy.placeholder = 'Execute By';
+    executeBy.id = 'executeBy';
 
-// save button
-let saveButton = document.createElement('button');
-saveButton.id = 'save';
-saveButton.textContent = '✅' ;
+    // save button
+    const saveButton = document.createElement('button');
+    saveButton.id = 'save';
+    saveButton.textContent = '✅' ;
+
+    const exitButton = document.createElement('button');
+    exitButton.id = 'exit';
+    exitButton.textContent = '🔙' ;
+    exitButton.addEventListener('click',()=>{
+    cardDiv.style.display ='none';
+    })
 
 
 // executeBy.addEventListener('click',()=>{
@@ -57,110 +59,126 @@ saveButton.textContent = '✅' ;
 
 
 
-//appending inputs
-cardDiv.appendChild(name);
-cardDiv.appendChild(description);
-cardDiv.appendChild(executeBy);
-cardDiv.appendChild(t);
-cardDiv.appendChild(finishDate);
-
-
-
-
-// styling
-cardDiv.style.marginTop='3vh';
-cardDiv.style.width = '20vw';
-cardDiv.style.height = '24vh';
-cardDiv.style.marginLeft = '10vw';
-cardDiv.style.border = '1px solid silver';
-cardDiv.style.backgroundColor='#00d0ff';
-// cardDiv.style.boxShadow= '5px 5px 5px 5px #00d0ff';
-cardDiv.style.display ='flex';
-cardDiv.style.flexDirection ='column';
-cardDiv.style.gap = '1em';
-
-// row styling
-name.style.marginTop='1vh';
-name.style.marginLeft='1vw';
-name.style.marginRight='1vw';
-description.style.marginLeft='1vw';
-description.style.marginRight='1vw';
-executeBy.style.marginLeft='1vw';
-executeBy.style.marginRight='1vw';
-finishDate.style.marginLeft='1vw';
-finishDate.style.marginRight='1vw';
-t.style.marginLeft='1vw';
-saveButton.style.marginLeft='1vw';
-saveButton.style.marginRight='1vw';
-
-
-
-
-
-
-
-
-// save button actions
-saveButton.addEventListener('click', () => {
-    axios.post('/api/create', {
-        name: document.getElementById('name').value,
-        description: document.getElementById('description').value,
-        finishDate: document.getElementById('finishDate').value,  
-        executeBy:document.getElementById('executeBy').value,  
-  
-    }).then(() =>{
-        location.reload()
-        window.alert("Task added");
-        plusButton.disabled = false;
-        card1.style.display='none';
-    })
-    .catch((error)  => {
-    document.getElementById('create').innerHTML = 'Error transpassing tasks. Please try again.';
-    })
-   
-    
-}) 
+    //appending inputs
+    cardDiv.appendChild(name);
+    cardDiv.appendChild(description);
+    cardDiv.appendChild(executeBy);
+    cardDiv.appendChild(t);
+    cardDiv.appendChild(finishDate);
+    cardDiv.appendChild(exitButton)
     cardDiv.appendChild(saveButton);
+
+
+
+
+    // styling
+    // cardDiv.style.marginTop='3vh';
+    // cardDiv.style.width = '20vw';
+    // cardDiv.style.height = '30vh';
+    // cardDiv.style.marginLeft = '10vw';
+    // cardDiv.style.border = '1px solid silver';
+    // cardDiv.style.backgroundColor='#00d0ff';
+    // // cardDiv.style.boxShadow= '5px 5px 5px 5px #00d0ff';
+    // cardDiv.style.display ='flex';
+    // cardDiv.style.flexDirection ='column';
+    // cardDiv.style.gap = '1em';
+
+    // row styling
+    // name.style.marginTop='1vh';
+    // name.style.marginLeft='1vw';
+    // name.style.marginRight='1vw';
+    // description.style.marginLeft='1vw';
+    // description.style.marginRight='1vw';
+    // executeBy.style.marginLeft='1vw';
+    // executeBy.style.marginRight='1vw';
+    // finishDate.style.marginLeft='1vw';
+    // finishDate.style.marginRight='1vw';
+    // t.style.marginLeft='1vw';
+    // saveButton.style.marginLeft='1vw';
+    // saveButton.style.marginRight='1vw';
+    // exitButton.style.marginLeft='1vw';
+    // exitButton.style.marginRight='1vw';
+
+
+
+
+
+
+
+
+    // save button actions
+    saveButton.addEventListener('click', () => {
+        axios.post('/api/create', {
+            name: document.getElementById('name').value,
+            description: document.getElementById('description').value,
+            finishDate: document.getElementById('finishDate').value,  
+            executeBy:document.getElementById('executeBy').value,  
+    
+        }).then(() =>{
+            location.reload()
+            window.alert("Task added");
+            plusButton.disabled = false;
+            card1.style.display='none';
+        })
+        .catch((error)  => {
+        document.getElementById('create').innerHTML = 'Error transpassing tasks. Please try again.';
+        })
+    
+        
+    }) 
+        
     
     
 }
 
 //# -------------------------------------------------------------------------------------#
-let editDiv = document.createElement('div');
+const editDiv = document.createElement('div');
+editDiv.id = 'editDiv';
 
 function editTask(itemId){
     // creating new card
 
-    let name = document.createElement('input');
+    const name = document.createElement('input');
     name.placeholder = 'Name';
-    name.id = 'name'
-    name.type = 'string'
+    name.id = 'name';
+    name.type = 'string';
 
-    let description = document.createElement('input');
+    const description = document.createElement('input');
     description.placeholder = 'Description';
-    description.id = 'description'
+    description.id = 'description';
 
 
-    let finishDate = document.createElement('input');
+    const finishDate = document.createElement('input');
     finishDate.type='date';
-    let t = document.createElement('span');
-    t.textContent = 'Finish date'
+    const t = document.createElement('span');
+    t.textContent = 'Finish date';
     finishDate.id ='finishDate';
-    let currentDate = new Date();
+    const currentDate = new Date();
     finishDate.min = currentDate.toLocaleString();
 
-    let executeBy = document.createElement('input');
+    const executeBy = document.createElement('input');
     executeBy.placeholder = 'Execute By';
     executeBy.id = 'executeBy';
 
 
-    let status = document.createElement('input');
+    const status = document.createElement('input');
     status.placeholder = 'Status';
     status.id = 'status';
 
+    const returnButton = document.createElement('button');
+    returnButton.id = 'return';
+    returnButton.textContent = '🔙' ;
+
+    returnButton.addEventListener('click',()=>{
+    editDiv.style.display ='none';
+    })
+
+
+
+
     // edit button
-    let editButton = document.createElement('button');
-    editButton.id = 'save';
+    const editButton = document.createElement('button');
+    editButton.id = 'edit';
     editButton.textContent = '✅' ;
     editButton.addEventListener('click', () => {
         axios.post(`/api/update/${itemId}/`, {
@@ -176,7 +194,7 @@ function editTask(itemId){
             editDiv.style.display='none';
         })
         .catch((error)  => {
-        document.getElementById('create').innerHTML = 'Error transpassing tasks. Please try again.';
+            document.getElementById('create').innerHTML = 'Error transpassing tasks. Please try again.';
         })
        
         
@@ -192,86 +210,46 @@ function editTask(itemId){
     editDiv.appendChild(finishDate);
     editDiv.appendChild(status);
     editDiv.appendChild(editButton);
+    editDiv.appendChild(returnButton);
 
 
 
 
     // styling
-    editDiv.style.marginTop='3vh';
-    editDiv.style.width = '20vw';
-    editDiv.style.height = '30vh';
-    editDiv.style.marginLeft = '20vw';
-    editDiv.style.border = '1px solid silver';
-    editDiv.style.backgroundColor='#00d0ff';
-    editDiv.style.display ='flex';
-    editDiv.style.flexDirection ='column';
-    editDiv.style.gap = '1em';
+//     editDiv.style.marginTop='3vh';
+//     editDiv.style.width = '20vw';
+//     editDiv.style.height = '35vh';
+//     editDiv.style.marginLeft = '20vw';
+//     editDiv.style.border = '1px solid silver';
+//     editDiv.style.backgroundColor='#00d0ff';
+//     editDiv.style.display ='flex';
+//     editDiv.style.flexDirection ='column';
+//     editDiv.style.gap = '1em';
 
-    // row styling
-    name.style.marginTop='1vh';
-    name.style.marginLeft='1vw';
-    name.style.marginRight='1vw';
-    description.style.marginLeft='1vw';
-    description.style.marginRight='1vw';
-    executeBy.style.marginLeft='1vw';
-    executeBy.style.marginRight='1vw';
-    finishDate.style.marginLeft='1vw';
-    finishDate.style.marginRight='1vw';
-    status.style.marginLeft='1vw';
-    status.style.marginRight='1vw';
-    t.style.marginLeft='1vw';
-    editButton.style.marginLeft='1vw';
-    editButton.style.marginRight='1vw';
-
-
-
-
+//     // row styling
+//     name.style.marginTop='1vh';
+//     name.style.marginLeft='1vw';
+//     name.style.marginRight='1vw';
+//     description.style.marginLeft='1vw';
+//     description.style.marginRight='1vw';
+//     executeBy.style.marginLeft='1vw';
+//     executeBy.style.marginRight='1vw';
+//     finishDate.style.marginLeft='1vw';
+//     finishDate.style.marginRight='1vw';
+//     status.style.marginLeft='1vw';
+//     status.style.marginRight='1vw';
+//     t.style.marginLeft='1vw';
+//     editButton.style.marginLeft='1vw';
+//     editButton.style.marginRight='1vw';
+//    returnButton.style.marginLeft='1vw';
+//    returnButton.style.marginRight='1vw';
 
 
-// let sendButton =document.createElement('button')
 
-// send button actions
-// editButton.addEventListener('click', () => {
-//     axios.post(`/api/update${item.id}`, {
-//         name: document.getElementById('name').value,
-//         description: document.getElementById('description').value,
-//         finishDate: document.getElementById('finishDate').value,  
-//         executeBy:document.getElementById('executeBy').value,  
-//         status:document.getElementById('status').value,  
-  
-//     }).then(() =>{
-//         location.reload()
-//         window.alert("Task updated");
-//         editDiv.style.display='none';
-//     })
-//     .catch((error)  => {
-//     document.getElementById('create').innerHTML = 'Error transpassing tasks. Please try again.';
-//     })
-   
-    
-// }) 
-//     editDiv.appendChild(editButton);
-    
+
+
     
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -306,7 +284,7 @@ function getTasks() {
                         <th>Complete</th>
                         <th>Updated At</th>
                         <th>Delete</th>
-                        <th>Edit Status</th>
+                        <th>Edit</th>
                     </tr>
                     ${response.data.tasks.map(item => `
                         <tr>
@@ -352,28 +330,7 @@ function getTasks() {
             response.data.tasks.forEach(item => {        
             document.getElementById(`${item.id}editButton`).addEventListener('click',()=>{
                     editTask(item.id)
-                    // editButton.addEventListener('click', () => {
-                    //     axios.post(`/api/update${item.id}`, {
-                    //         name: document.getElementById('name').value,
-                    //         description: document.getElementById('description').value,
-                    //         finishDate: document.getElementById('finishDate').value,  
-                    //         executeBy:document.getElementById('executeBy').value,  
-                    //         status:document.getElementById('status').value,  
-                      
-                    //     }).then(() =>{
-                    //         location.reload()
-                    //         window.alert("Task updated");
-                    //         editDiv.style.display='none';
-                    //     })
-                    //     .catch((error)  => {
-                    //     document.getElementById('create').innerHTML = 'Error transpassing tasks. Please try again.';
-                    //     })
-                       
-                        
-                    // }) 
-                    //     editDiv.appendChild(editButton);
-                
-               
+            
                     })
                 })
         }
@@ -391,12 +348,6 @@ function getTasks() {
 
 
 
-
-
-
-
-
-document.body.appendChild(container);
 document.body.appendChild(cardDiv); 
 document.body.appendChild(editDiv); 
 

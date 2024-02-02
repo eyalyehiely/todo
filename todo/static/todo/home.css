@@ -49,4 +49,38 @@ body{
 #plusButton{
     border-radius: 10px;
     
+    
+}
+
+
+
+#cardDiv {
+    margin-top: 3vh;
+    width: 20vw;
+    height: 30vh;
+    margin-left: 10vw;
+    /* border: 1px solid silver; */
+    /* background-color: #00d0ff; */
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    margin-top: 1vh;
+    margin-left: 1vw;
+    margin-right: 1vw;
+}
+
+
+#editDiv{
+    margin-top: 3vh;
+    width: 20vw;
+    height: 35vh;
+    margin-left: 20vw;
+    /* border: 1px solid silver; */
+    /* background-color: #00d0ff;  */
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    margin-top: 1vh;
+    margin-left: 1vw;
+    margin-right: 1vw;  
 }
