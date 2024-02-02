@@ -7,14 +7,14 @@
     <title>Home</title>
     <script src="{% static "js/app.js" %}" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <link rel="stylesheet" href="{% static 'todo/home.css/' %}">
+    <link rel="stylesheet" href="{% static 'todo/home.css' %}">
 
 
 </head>
 <body>
-    <h1 id=" title">{{username}}'s TO DO LIST</h1>
-    <div id="plusButton"> <button onclick="createCard()"> Create a new task ➕</button></div>
-   
+    <h1 id=" title">{{request.user}}'s TO DO LIST</h1>
+    <button id='plusButton'  onclick="createCard()"> New task ➕</button>
+    <button onclick="exit()">Exit</button>
     <div id="plus"><div>
     <div id="create"></div>
   

@@ -46,9 +46,7 @@ body{
 }
 
 
-/* body {
-    background-image: url('/static/contact_app/images/background2.jpg');
-    background-size:cover;
-    color:white;
-    margin-left: 1%;
-    margin-right: 1%; */
+#plusButton{
+    border-radius: 10px;
+    
+}

@@ -1,4 +1,9 @@
 
+function exit(){
+    window.location.href= 'http://127.0.0.1:8000/login/'
+}
+
+
 let container = document.createElement('div');
 
 container.appendChild(document.getElementById('plus'));
@@ -123,79 +128,100 @@ saveButton.addEventListener('click', () => {
 //# -------------------------------------------------------------------------------------#
 let editDiv = document.createElement('div');
 
-function editTask(){
+function editTask(itemId){
     // creating new card
 
-let name = document.createElement('input');
-name.placeholder = 'Name';
-name.id = 'name'
-name.type = 'string'
+    let name = document.createElement('input');
+    name.placeholder = 'Name';
+    name.id = 'name'
+    name.type = 'string'
 
-let description = document.createElement('input');
-description.placeholder = 'Description';
-description.id = 'description'
-
-
-let finishDate = document.createElement('input');
-finishDate.type='date';
-let t = document.createElement('span');
-t.textContent = 'Finish date'
-finishDate.id ='finishDate';
-let currentDate = new Date();
-finishDate.min = currentDate.toLocaleString();
-
-let executeBy = document.createElement('input');
-executeBy.placeholder = 'Execute By';
-executeBy.id = 'executeBy';
+    let description = document.createElement('input');
+    description.placeholder = 'Description';
+    description.id = 'description'
 
 
-let status = document.createElement('input');
-status.placeholder = 'Status';
-status.id = 'status';
+    let finishDate = document.createElement('input');
+    finishDate.type='date';
+    let t = document.createElement('span');
+    t.textContent = 'Finish date'
+    finishDate.id ='finishDate';
+    let currentDate = new Date();
+    finishDate.min = currentDate.toLocaleString();
 
-// edit button
-let editButton = document.createElement('button');
-editButton.id = 'save';
-editButton.textContent = '✅' ;
-
-//appending inputs
-editDiv.appendChild(name);
-editDiv.appendChild(description);
-editDiv.appendChild(executeBy);
-editDiv.appendChild(t);
-editDiv.appendChild(finishDate);
-editDiv.appendChild(status);
-editDiv.appendChild(editButton);
+    let executeBy = document.createElement('input');
+    executeBy.placeholder = 'Execute By';
+    executeBy.id = 'executeBy';
 
 
+    let status = document.createElement('input');
+    status.placeholder = 'Status';
+    status.id = 'status';
+
+    // edit button
+    let editButton = document.createElement('button');
+    editButton.id = 'save';
+    editButton.textContent = '✅' ;
+    editButton.addEventListener('click', () => {
+        axios.post(`/api/update/${itemId}/`, {
+            name: document.getElementById('name').value,
+            description: document.getElementById('description').value,
+            finishDate: document.getElementById('finishDate').value,  
+            executeBy:document.getElementById('executeBy').value,  
+            status:document.getElementById('status').value,  
+      
+        }).then(() =>{
+            location.reload()
+            window.alert("Task updated");
+            editDiv.style.display='none';
+        })
+        .catch((error)  => {
+        document.getElementById('create').innerHTML = 'Error transpassing tasks. Please try again.';
+        })
+       
+        
+    }) 
+        editDiv.appendChild(editButton);
 
 
-// styling
-editDiv.style.marginTop='3vh';
-editDiv.style.width = '20vw';
-editDiv.style.height = '30vh';
-editDiv.style.marginLeft = '20vw';
-editDiv.style.border = '1px solid silver';
-editDiv.style.backgroundColor='#00d0ff';
-editDiv.style.display ='flex';
-editDiv.style.flexDirection ='column';
-editDiv.style.gap = '1em';
+    //appending inputs
+    editDiv.appendChild(name);
+    editDiv.appendChild(description);
+    editDiv.appendChild(executeBy);
+    editDiv.appendChild(t);
+    editDiv.appendChild(finishDate);
+    editDiv.appendChild(status);
+    editDiv.appendChild(editButton);
 
-// row styling
-name.style.marginTop='1vh';
-name.style.marginLeft='1vw';
-name.style.marginRight='1vw';
-description.style.marginLeft='1vw';
-description.style.marginRight='1vw';
-executeBy.style.marginLeft='1vw';
-executeBy.style.marginRight='1vw';
-finishDate.style.marginLeft='1vw';
-finishDate.style.marginRight='1vw';
-status.style.marginLeft='1vw';
-status.style.marginRight='1vw';
-t.style.marginLeft='1vw';
-editButton.style.marginLeft='1vw';
-editButton.style.marginRight='1vw';
+
+
+
+    // styling
+    editDiv.style.marginTop='3vh';
+    editDiv.style.width = '20vw';
+    editDiv.style.height = '30vh';
+    editDiv.style.marginLeft = '20vw';
+    editDiv.style.border = '1px solid silver';
+    editDiv.style.backgroundColor='#00d0ff';
+    editDiv.style.display ='flex';
+    editDiv.style.flexDirection ='column';
+    editDiv.style.gap = '1em';
+
+    // row styling
+    name.style.marginTop='1vh';
+    name.style.marginLeft='1vw';
+    name.style.marginRight='1vw';
+    description.style.marginLeft='1vw';
+    description.style.marginRight='1vw';
+    executeBy.style.marginLeft='1vw';
+    executeBy.style.marginRight='1vw';
+    finishDate.style.marginLeft='1vw';
+    finishDate.style.marginRight='1vw';
+    status.style.marginLeft='1vw';
+    status.style.marginRight='1vw';
+    t.style.marginLeft='1vw';
+    editButton.style.marginLeft='1vw';
+    editButton.style.marginRight='1vw';
 
 
 
@@ -304,39 +330,48 @@ function getTasks() {
 
             response.data.tasks.forEach(item => {
                 document.getElementById(item.id).addEventListener('click', () => {
+                   let answer=  window.prompt("Are you sure you want to delete this task?",'No')
+                    if (answer.toLowerCase() == 'yes'){
                     axios.get(`http://127.0.0.1:8000/api/delete/${item.id}`).then(()=>{
                         window.alert("Task deleted")
                         getTasks()
                     })
+                }
+                
+                else{
+                    window.alert("Task didn't delete")
+
+                }
+                    })
                     
             
                 })    
-            }) 
+            
        
                 
             response.data.tasks.forEach(item => {        
             document.getElementById(`${item.id}editButton`).addEventListener('click',()=>{
-                editTask()
-                    editButton.addEventListener('click', () => {
-                        axios.post(`/api/update${item.id}`, {
-                            name: document.getElementById('name').value,
-                            description: document.getElementById('description').value,
-                            finishDate: document.getElementById('finishDate').value,  
-                            executeBy:document.getElementById('executeBy').value,  
-                            status:document.getElementById('status').value,  
+                    editTask(item.id)
+                    // editButton.addEventListener('click', () => {
+                    //     axios.post(`/api/update${item.id}`, {
+                    //         name: document.getElementById('name').value,
+                    //         description: document.getElementById('description').value,
+                    //         finishDate: document.getElementById('finishDate').value,  
+                    //         executeBy:document.getElementById('executeBy').value,  
+                    //         status:document.getElementById('status').value,  
                       
-                        }).then(() =>{
-                            location.reload()
-                            window.alert("Task updated");
-                            editDiv.style.display='none';
-                        })
-                        .catch((error)  => {
-                        document.getElementById('create').innerHTML = 'Error transpassing tasks. Please try again.';
-                        })
+                    //     }).then(() =>{
+                    //         location.reload()
+                    //         window.alert("Task updated");
+                    //         editDiv.style.display='none';
+                    //     })
+                    //     .catch((error)  => {
+                    //     document.getElementById('create').innerHTML = 'Error transpassing tasks. Please try again.';
+                    //     })
                        
                         
-                    }) 
-                        editDiv.appendChild(editButton);
+                    // }) 
+                    //     editDiv.appendChild(editButton);
                 
                
                     })

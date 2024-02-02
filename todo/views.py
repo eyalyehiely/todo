@@ -9,6 +9,7 @@ from .models import Task
 from django.http import JsonResponse
 import json
 import datetime
+from django.utils import timezone
 
 
 def login(request):
@@ -24,7 +25,8 @@ def login(request):
     else:
         auth_login(request, user)
         request.session['username'] = username
-        return render(request=request,template_name='todo/home.html',context={'username':username.upper()})
+        return redirect ('home')
+        # return render(request=request,template_name='todo/home.html',context={'username':username.upper()})
 
 
 @login_required(login_url='login/')
@@ -52,7 +54,7 @@ def register(request):
 
             user = User(first_name = first_name, last_name = last_name, username = username, password = password, email = email)
             user.save()
-            return render(request=request,template_name='todo/login.html')
+            return render(request=request,template_name='todo/home.html')
 
     return render(request, 'todo/register.html')
 
@@ -60,7 +62,7 @@ def register(request):
 def createTask(request):
     name = json.loads(request.body)['name']
     description = json.loads(request.body)['description']
-    date = datetime.datetime.now()
+    date = timezone.now.strftime('%Y-%m-%d %H:%M:%S')
     finishDate = json.loads(request.body)['finishDate']
     givenBy = request.user.username
     execute_by =json.loads(request.body)['executeBy']
@@ -104,23 +106,24 @@ def delete_task(request,task_id):
 
 def update_task(request,task_id):
     try:
-        task = Task.objects.filter(id=task_id)
+        task = Task.objects.get(id=task_id)
         name = json.loads(request.body)['name']
         description = json.loads(request.body)['description']
         date = datetime.datetime.now()
         finishDate = json.loads(request.body)['finishDate']
         givenBy = request.user.username
         execute_by =json.loads(request.body)['executeBy']
-        complete = False
+        complete = False 
         updateAt = datetime.datetime.now()
+
         task.name = name
         task.description =description
-        task.date = date
-        task.finishDate = finishDate
-        task.givenBy = givenBy
+        task.given_date = date
+        task.finish_date = finishDate
+        task.given_by = givenBy
         task.execute_by =execute_by
         task.complete =complete
-        task.updateAt = updateAt
+        task.updated_at = updateAt
         task.save()
         return JsonResponse({'updated_task':task})
     except:
