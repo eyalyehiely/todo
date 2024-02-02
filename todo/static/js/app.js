@@ -33,8 +33,9 @@ description.id = 'description'
 
 let finishDate = document.createElement('input');
 finishDate.type='date';
-finishDate.placeholder = 'Finish Date';
-finishDate.id ='finishDate'
+let t = document.createElement('span');
+t.textContent = 'Finish date'
+finishDate.id ='finishDate';
 let currentDate = new Date();
 finishDate.min = currentDate.toLocaleString();
 
@@ -47,10 +48,30 @@ executeBy.placeholder = 'Execute By';
 executeBy.id = 'executeBy';
 
 
+// executeBy.addEventListener('click',()=>{
+//     axios.post(`http://127.0.0.1:8000/api/execute_by`).then((response)=>{
+//         for(user in response.users.user){
+//             let option = document.createElement('option')
+//             option.value = user
+//         }
+
+//     })
+
+//     })
+
+
+
+
+
+
+
+
+
 //appending inputs
 cardDiv.appendChild(name);
 cardDiv.appendChild(description);
 cardDiv.appendChild(executeBy);
+cardDiv.appendChild(t);
 cardDiv.appendChild(finishDate);
 
 
@@ -59,13 +80,16 @@ cardDiv.appendChild(finishDate);
 // styling
 cardDiv.style.width = '50vw';
 cardDiv.style.height = '30vh';
+cardDiv.style.marginLeft = '20vw';
 cardDiv.style.border = '1px solid silver';
 cardDiv.style.backgroundColor='ghostwhite';
 cardDiv.style.boxShadow= '5px 5px 5px 5px lightgray';
 cardDiv.style.display ='flex';
 cardDiv.style.flexDirection ='column';
 cardDiv.style.gap = '1em';
-cardDiv.style.maxWidth='200px';
+cardDiv.style.maxWidth='170px';
+
+
 
 
 
@@ -104,8 +128,7 @@ saveButton.addEventListener('click', () => {
     
 }
 
-document.body.appendChild(container);
-document.body.appendChild(cardDiv);
+
 
 
 let tableDiv = document.createElement('div');
@@ -129,7 +152,6 @@ function getTasks() {
                         <th>Execute By</th>
                         <th>Complete</th>
                         <th>Updated At</th>
-                        <th>Share With</th>
                         <th>Delete</th>
                         <th>Edit Status</th>
                     </tr>
@@ -143,7 +165,6 @@ function getTasks() {
                             <td>${item.execute_by}</td>
                             <td>${item.complete}</td>
                             <td>${item.updated_at}</td>
-                            <td>👥</td>
                             <td><button id="${item.id}" name='deleteButton'>🗑️</button></td>
                             <td><button id="${item.id}editButton" name="editButton">📝</button></td>
                         </tr>
@@ -168,12 +189,17 @@ function getTasks() {
                 
             response.data.tasks.forEach(item => {        
             document.getElementById(`${item.id}editButton`).addEventListener('click',()=>{
-                let complete = window.prompt('Insert task status');
+               
+               
                 
                 axios.get(`http://127.0.0.1:8000/api/update/${item.id}`,
-                    {
+                    {   
+                        name:name,
+                        description:description,
+                        execute_by,
+                        finish_date,finishdate,
                   
-                    complete: complete,
+                    // complete: complete,
                     })
                         window.alert("Task updated")
                         getTasks()
@@ -188,5 +214,6 @@ function getTasks() {
 }
 
    
-   
+document.body.appendChild(container);
+document.body.appendChild(cardDiv); 
 getTasks();

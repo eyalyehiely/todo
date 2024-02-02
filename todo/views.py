@@ -102,21 +102,40 @@ def delete_task(request,task_id):
         return JsonResponse({"status":f"No such task with {task_id} id"})
 
 
-def update_task(request,task_id):
-    try:
-        task = Task.objects.filter(id=task_id)
-        complete = json.loads(request.body)['complete']
-        if complete.lower() == 'true':
-            complete == True
-        else:
-            complete ==False
-        task.complete = complete
-        task.save()
-        return JsonResponse({'updated_task':task})
-    except:
-        return JsonResponse({"status":f"No such task with {task_id} id"})
+# def update_task(request,task_id):
+#     try:
+#         task = Task.objects.filter(id=task_id)
+#         name = json.loads(request.body)['name']
+#         description = json.loads(request.body)['description']
+#         date = datetime.datetime.now()
+#         finishDate = json.loads(request.body)['finishDate']
+#         givenBy = request.user.username
+#         execute_by =json.loads(request.body)['executeBy']
+#         complete = False
+#         updateAt = datetime.datetime.now()
+#         task.name = name
+#         task.description =description
+#         task.date = date
+#         task.finishDate = finishDate
+#         task.givenBy = givenBy
+#         task.execute_by =execute_by
+#         task.complete =complete
+#         task.updateAt = updateAt
+#         task.save()
+#         return JsonResponse({'updated_task':task})
+#     except:
+#         return JsonResponse({"status":f"No such task with {task_id} id"})
     
 
+# returning all username from db
+def execute_by():
+    try:
+        users = User.objects.all()
+        usernames = []
+        i=0
+        for user in users:
+            usernames.append({f'user{[i]}':user.username})
+        return JsonResponse({'users':usernames})
+    except:
+        return JsonResponse({'status':'No data'})
 
-def share_task():
-    pass
