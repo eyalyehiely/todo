@@ -34,13 +34,21 @@ td button {
 
 tr:hover{
     background-color: #dddddd;
-    /* text-shadow: 2px 2px; */
+
 }
 
-.plus{
-    box-shadow: 10px 10px 5px 12px lightgray;
+
+
+
+
+body{
+    background: linear-gradient( #00d0ff, #0073ff, #0085cc);
 }
 
-/* body{
-    background: linear-gradient(to bottom, #004cff, #007bff, #3a00cc);
-} */
+
+/* body {
+    background-image: url('/static/contact_app/images/background2.jpg');
+    background-size:cover;
+    color:white;
+    margin-left: 1%;
+    margin-right: 1%; */
