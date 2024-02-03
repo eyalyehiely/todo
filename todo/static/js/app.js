@@ -10,6 +10,7 @@ plusButton.id = 'plusButton';
 plusButton.addEventListener('click',()=>{
     createCard()
     plusButton.disabled =true;
+    // cardDiv.style.display = 'block'
 })
 
 const cardDiv = document.createElement('div');
@@ -78,7 +79,12 @@ function createCard(){
     exitButton.textContent = '🔙' ;
     exitButton.addEventListener('click',()=>{
     cardDiv.style.display ='none';
+    // cardDiv.style.position = 'absolute';
+    // cardDiv.style.visibility = 'hidden';
+
+
     plusButton.disabled = false;
+
     })
 
 
@@ -103,11 +109,11 @@ function createCard(){
     // styling
     cardDiv.style.marginTop='3vh';
     cardDiv.style.width = '20vw';
-    cardDiv.style.height = '30vh';
+    cardDiv.style.height = '35vh';
     cardDiv.style.marginLeft = '10vw';
     cardDiv.style.border = '1px solid silver';
-    cardDiv.style.backgroundColor='#00d0ff';
-    // cardDiv.style.boxShadow= '5px 5px 5px 5px #00d0ff';
+    cardDiv.style.backgroundColor='#dddddd';
+    cardDiv.style.borderRadius='4px';
     cardDiv.style.display ='flex';
     cardDiv.style.flexDirection ='column';
     cardDiv.style.gap = '1em';
@@ -288,10 +294,11 @@ function editTask(itemId){
     // styling
     editDiv.style.marginTop='3vh';
     editDiv.style.width = '20vw';
-    editDiv.style.height = '35vh';
+    editDiv.style.height = '38vh';
     editDiv.style.marginLeft = '20vw';
     editDiv.style.border = '1px solid silver';
-    editDiv.style.backgroundColor='gray';
+    editDiv.style.borderRadius = '4px';
+    editDiv.style.backgroundColor='#dddddd';
     editDiv.style.display ='flex';
     editDiv.style.flexDirection ='column';
     editDiv.style.gap = '1em';
@@ -356,7 +363,7 @@ function getTasks() {
                         <th>Delete</th>
                         <th>Edit</th>
                     </tr>
-                    <hr>
+                    
                     ${response.data.tasks.map(item => `
                         <tr>
                             <td>${item.name}</td>
