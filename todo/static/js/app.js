@@ -37,9 +37,36 @@ function createCard(){
     finishDate.min = currentDate.toLocaleString();
     
 
-    const executeBy = document.createElement('input');
-    executeBy.placeholder = 'Execute By';
+    const executeBy = document.createElement('select');
     executeBy.id = 'executeBy';
+    executeBy.addEventListener('click', () => {
+        axios.post(`http://127.0.0.1:8000/api/execute_by`)
+            .then((response) => {
+                const users = response.data.users;
+    
+               
+                executeBy.innerHTML = '';
+    
+                const defaultOption = document.createElement('option');
+                defaultOption.text = 'Choose a user';
+                defaultOption.value = '';
+                executeBy.appendChild(defaultOption);
+    
+               
+                users.forEach((user) => {
+                   
+                    const option = document.createElement('option');
+                    option.text = user.user;
+                    option.value = user.user;  
+                    executeBy.appendChild(option);
+                });
+            })
+            .catch((error) => {
+                console.error('Error fetching data:',error);
+            });
+    });
+    
+    
 
     // save button
     const saveButton = document.createElement('button');
@@ -55,15 +82,7 @@ function createCard(){
     })
 
 
-// executeBy.addEventListener('click',()=>{
-//     axios.post(`http://127.0.0.1:8000/api/execute_by`).then((response)=>{
-//         for(user in response.users.user){
-//             let option = document.createElement('option')
-//             option.value = user
-//         }
 
-//     })
-// })
 
 
 
@@ -166,14 +185,54 @@ function editTask(itemId){
     const currentDate = new Date();
     finishDate.min = currentDate.toLocaleString();
 
-    const executeBy = document.createElement('input');
-    executeBy.placeholder = 'Execute By';
+    const executeBy = document.createElement('select');
     executeBy.id = 'executeBy';
+    executeBy.addEventListener('click', () => {
+        axios.post(`http://127.0.0.1:8000/api/execute_by`)
+            .then((response) => {
+                const users = response.data.users;
+    
+               
+                executeBy.innerHTML = '';
+    
+                const defaultOption = document.createElement('option');
+                defaultOption.text = 'Choose a user';
+                defaultOption.value = '';
+                executeBy.appendChild(defaultOption);
+    
+               
+                users.forEach((user) => {
+                   
+                    const option = document.createElement('option');
+                    option.text = user.user;
+                    option.value = user.user;  
+                    executeBy.appendChild(option);
+                });
+            })
+            .catch((error) => {
+                console.error('Error fetching data:',error);
+            });
+        })
 
-
-    const status = document.createElement('input');
+    const status = document.createElement('select');
     status.placeholder = 'Status';
     status.id = 'status';
+    status.innerHTML = '';
+    const defaultOption = document.createElement('option');
+    defaultOption.text = 'Choose status';
+    defaultOption.value = '';
+    status.appendChild(defaultOption);
+    const option1 = document.createElement('option');
+    option1.text = 'Done';
+    option1.value = 'done';  
+    status.appendChild(option1);
+    const option2 = document.createElement('option');
+    option2.text = 'Not done';
+    option2.value = 'not done';  
+    status.appendChild(option2);
+
+
+
 
     const returnButton = document.createElement('button');
     returnButton.id = 'return';

@@ -115,12 +115,9 @@ def update_task(request,task_id):
         execute_by =json.loads(request.body)['executeBy']
         complete =  json.loads(request.body)['status']
         updateAt = datetime.datetime.now()
-
         task.name = name
         task.description =description
-        task.given_date = date
         task.finish_date = finishDate
-        task.given_by = givenBy
         task.execute_by =execute_by
         task.complete =complete
         task.updated_at = updateAt
@@ -130,8 +127,8 @@ def update_task(request,task_id):
         return JsonResponse({"status":f"No such task with {task_id} id"})
     
 
-# returning all username from db
-def execute_by():
+# returning all usernames from db
+def execute_by(request):
     try:
         users = User.objects.all()
         usernames = []
