@@ -62,7 +62,7 @@ def register(request):
 def createTask(request):
     name = json.loads(request.body)['name']
     description = json.loads(request.body)['description']
-    date = timezone.now.strftime('%Y-%m-%d %H:%M:%S')
+    date = datetime.datetime.now()
     finishDate = json.loads(request.body)['finishDate']
     givenBy = request.user.username
     execute_by =json.loads(request.body)['executeBy']
@@ -113,7 +113,7 @@ def update_task(request,task_id):
         finishDate = json.loads(request.body)['finishDate']
         givenBy = request.user.username
         execute_by =json.loads(request.body)['executeBy']
-        complete = False 
+        complete =  json.loads(request.body)['status']
         updateAt = datetime.datetime.now()
 
         task.name = name
@@ -135,10 +135,12 @@ def execute_by():
     try:
         users = User.objects.all()
         usernames = []
-        i=0
         for user in users:
-            usernames.append({f'user{[i]}':user.username})
+            usernames.append({'user':user.username})
         return JsonResponse({'users':usernames})
     except:
         return JsonResponse({'status':'No data'})
 
+
+def search(request,input):
+    return get_tasks(request)

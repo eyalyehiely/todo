@@ -1,11 +1,19 @@
+const pageDiv = document.createElement('div');
 
 function exit(){
     window.location.href= 'http://127.0.0.1:8000/login/'
 }
-
+const plusButton = document.createElement('button');
+plusButton.disabled =false;
+plusButton.textContent = 'Add Task➕';
+plusButton.id = 'plusButton';
+plusButton.addEventListener('click',()=>{
+    createCard()
+    plusButton.disabled =true;
+})
 
 const cardDiv = document.createElement('div');
-cardDiv.id = 'cardDiv'
+cardDiv.id = 'cardDiv';
 
 function createCard(){
     // creating new card
@@ -27,6 +35,7 @@ function createCard(){
     finishDate.id ='finishDate';
     const currentDate = new Date();
     finishDate.min = currentDate.toLocaleString();
+    
 
     const executeBy = document.createElement('input');
     executeBy.placeholder = 'Execute By';
@@ -42,6 +51,7 @@ function createCard(){
     exitButton.textContent = '🔙' ;
     exitButton.addEventListener('click',()=>{
     cardDiv.style.display ='none';
+    plusButton.disabled = false;
     })
 
 
@@ -53,8 +63,7 @@ function createCard(){
 //         }
 
 //     })
-
-//     })
+// })
 
 
 
@@ -65,39 +74,40 @@ function createCard(){
     cardDiv.appendChild(executeBy);
     cardDiv.appendChild(t);
     cardDiv.appendChild(finishDate);
-    cardDiv.appendChild(exitButton)
+    // cardDiv.appendChild(plusButton);
+    cardDiv.appendChild(exitButton);
     cardDiv.appendChild(saveButton);
 
 
 
 
     // styling
-    // cardDiv.style.marginTop='3vh';
-    // cardDiv.style.width = '20vw';
-    // cardDiv.style.height = '30vh';
-    // cardDiv.style.marginLeft = '10vw';
-    // cardDiv.style.border = '1px solid silver';
-    // cardDiv.style.backgroundColor='#00d0ff';
-    // // cardDiv.style.boxShadow= '5px 5px 5px 5px #00d0ff';
-    // cardDiv.style.display ='flex';
-    // cardDiv.style.flexDirection ='column';
-    // cardDiv.style.gap = '1em';
+    cardDiv.style.marginTop='3vh';
+    cardDiv.style.width = '20vw';
+    cardDiv.style.height = '30vh';
+    cardDiv.style.marginLeft = '10vw';
+    cardDiv.style.border = '1px solid silver';
+    cardDiv.style.backgroundColor='#00d0ff';
+    // cardDiv.style.boxShadow= '5px 5px 5px 5px #00d0ff';
+    cardDiv.style.display ='flex';
+    cardDiv.style.flexDirection ='column';
+    cardDiv.style.gap = '1em';
 
     // row styling
-    // name.style.marginTop='1vh';
-    // name.style.marginLeft='1vw';
-    // name.style.marginRight='1vw';
-    // description.style.marginLeft='1vw';
-    // description.style.marginRight='1vw';
-    // executeBy.style.marginLeft='1vw';
-    // executeBy.style.marginRight='1vw';
-    // finishDate.style.marginLeft='1vw';
-    // finishDate.style.marginRight='1vw';
-    // t.style.marginLeft='1vw';
-    // saveButton.style.marginLeft='1vw';
-    // saveButton.style.marginRight='1vw';
-    // exitButton.style.marginLeft='1vw';
-    // exitButton.style.marginRight='1vw';
+    name.style.marginTop='1vh';
+    name.style.marginLeft='1vw';
+    name.style.marginRight='1vw';
+    description.style.marginLeft='1vw';
+    description.style.marginRight='1vw';
+    executeBy.style.marginLeft='1vw';
+    executeBy.style.marginRight='1vw';
+    finishDate.style.marginLeft='1vw';
+    finishDate.style.marginRight='1vw';
+    t.style.marginLeft='1vw';
+    saveButton.style.marginLeft='1vw';
+    saveButton.style.marginRight='1vw';
+    exitButton.style.marginLeft='1vw';
+    exitButton.style.marginRight='1vw';
 
 
 
@@ -168,9 +178,9 @@ function editTask(itemId){
     const returnButton = document.createElement('button');
     returnButton.id = 'return';
     returnButton.textContent = '🔙' ;
-
     returnButton.addEventListener('click',()=>{
-    editDiv.style.display ='none';
+        editDiv.style.display ='none';
+        plusButton.disabled = false;
     })
 
 
@@ -195,6 +205,7 @@ function editTask(itemId){
         })
         .catch((error)  => {
             document.getElementById('create').innerHTML = 'Error transpassing tasks. Please try again.';
+            console.log('Error transpassing tasks',error)
         })
        
         
@@ -216,33 +227,33 @@ function editTask(itemId){
 
 
     // styling
-//     editDiv.style.marginTop='3vh';
-//     editDiv.style.width = '20vw';
-//     editDiv.style.height = '35vh';
-//     editDiv.style.marginLeft = '20vw';
-//     editDiv.style.border = '1px solid silver';
-//     editDiv.style.backgroundColor='#00d0ff';
-//     editDiv.style.display ='flex';
-//     editDiv.style.flexDirection ='column';
-//     editDiv.style.gap = '1em';
+    editDiv.style.marginTop='3vh';
+    editDiv.style.width = '20vw';
+    editDiv.style.height = '35vh';
+    editDiv.style.marginLeft = '20vw';
+    editDiv.style.border = '1px solid silver';
+    editDiv.style.backgroundColor='gray';
+    editDiv.style.display ='flex';
+    editDiv.style.flexDirection ='column';
+    editDiv.style.gap = '1em';
 
-//     // row styling
-//     name.style.marginTop='1vh';
-//     name.style.marginLeft='1vw';
-//     name.style.marginRight='1vw';
-//     description.style.marginLeft='1vw';
-//     description.style.marginRight='1vw';
-//     executeBy.style.marginLeft='1vw';
-//     executeBy.style.marginRight='1vw';
-//     finishDate.style.marginLeft='1vw';
-//     finishDate.style.marginRight='1vw';
-//     status.style.marginLeft='1vw';
-//     status.style.marginRight='1vw';
-//     t.style.marginLeft='1vw';
-//     editButton.style.marginLeft='1vw';
-//     editButton.style.marginRight='1vw';
-//    returnButton.style.marginLeft='1vw';
-//    returnButton.style.marginRight='1vw';
+    //  row styling
+    name.style.marginTop='1vh';
+    name.style.marginLeft='1vw';
+    name.style.marginRight='1vw';
+    description.style.marginLeft='1vw';
+    description.style.marginRight='1vw';
+    executeBy.style.marginLeft='1vw';
+    executeBy.style.marginRight='1vw';
+    finishDate.style.marginLeft='1vw';
+    finishDate.style.marginRight='1vw';
+    status.style.marginLeft='1vw';
+    status.style.marginRight='1vw';
+    t.style.marginLeft='1vw';
+    editButton.style.marginLeft='1vw';
+    editButton.style.marginRight='1vw';
+   returnButton.style.marginLeft='1vw';
+   returnButton.style.marginRight='1vw';
 
 
 
@@ -286,6 +297,7 @@ function getTasks() {
                         <th>Delete</th>
                         <th>Edit</th>
                     </tr>
+                    <hr>
                     ${response.data.tasks.map(item => `
                         <tr>
                             <td>${item.name}</td>
@@ -343,11 +355,29 @@ function getTasks() {
 
 
 
+
+
+function search() {
+    const input = document.getElementById('search').value;
+    axios.get(`http://127.0.0.1:8000/api/search/${input}`).then((response) => {
+        const matchingItems = response.data.tasks.filter(item => item.includes(input));
+
+        if (matchingItems.length > 0) {
+            document.getElementById('output').innerHTML = matchingItems.join('<br>');
+        } else {
+            document.getElementById('output').innerHTML = 'No results found.';
+        }
+    }).catch((error) => {
+        console.error('Error fetching data',error);
+    });
+}
+
+        
+
    
 
 
-
-
+document.body.appendChild(plusButton); 
 document.body.appendChild(cardDiv); 
 document.body.appendChild(editDiv); 
 
