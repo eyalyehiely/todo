@@ -51,37 +51,15 @@ body{
     
 }
 
-
-/* 
-#cardDiv {
-
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin: 20px;
-    padding: 16px;
-    background-color:green;
-} */
-
-/* .card h3 {
-    color: #333;
+#exit{
+    border-radius: 3px;
+}
+#exit:hover
+ {
+    background-color: gray;
+    color: white;
 }
 
-.card p {
-    color: #666;
-} */
-
-
-/*  
-#editDiv{
-    margin-top: 3vh;
-    width: 20vw;
-    height: 35vh;
-    margin-left: 20vw;
-    border: 1px solid silver;
-    background-color: #00d0ff; 
-    display: flex;
-    flex-direction: column;
-    gap: 1em;
-    margin-right: 1vw;  
-} */
+.methods{
+    text-align: center;
+}

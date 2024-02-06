@@ -13,9 +13,10 @@
 </head>
 <body>
     <h1 id=" title">{{request.user}}'s TO DO LIST</h1>
-    <i class="bi bi-arrow-return-right"></i>
-    <button onclick="exit()">Exit</button>
-    <input type="search" name="search" id="search" placeholder="Search" oninput="search()">
+    <div class='methods'>
+        <button id='exit' onclick= "exit()">Exit</button>
+        <input type="search" name="search" id="search" placeholder="Search" oninput="search()">
+    </div>
     <div id="plus"><div>
     <div id="create"></div>
   

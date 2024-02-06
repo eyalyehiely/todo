@@ -9,8 +9,7 @@ from .models import Task
 from django.http import JsonResponse
 import json
 import datetime
-from django.utils import timezone
-
+from django.http import Http404
 
 def login(request):
     if request.method == 'GET':
@@ -21,12 +20,11 @@ def login(request):
         user = authenticate(request, username=username, password=password)
         password = make_password(password)
     if not user:
-        return HttpResponse('User not found')
+        return render(request=request,template_name='todo/404.html')
     else:
         auth_login(request, user)
         request.session['username'] = username
         return redirect ('home')
-        # return render(request=request,template_name='todo/home.html',context={'username':username.upper()})
 
 
 @login_required(login_url='login/')
@@ -83,7 +81,7 @@ def get_tasks(request):
        'id':task.id,
        "name":task.name,
        'description':task.description,
-       'given_date':task.given_date,
+       'given_date':task.given_date.isoformat(),
        'finish_date':task.finish_date,
        'given_by':task.given_by,
        'execute_by':task.execute_by,
@@ -109,9 +107,7 @@ def update_task(request,task_id):
         task = Task.objects.get(id=task_id)
         name = json.loads(request.body)['name']
         description = json.loads(request.body)['description']
-        date = datetime.datetime.now()
         finishDate = json.loads(request.body)['finishDate']
-        givenBy = request.user.username
         execute_by =json.loads(request.body)['executeBy']
         complete =  json.loads(request.body)['status']
         updateAt = datetime.datetime.now()
@@ -138,6 +134,11 @@ def execute_by(request):
     except:
         return JsonResponse({'status':'No data'})
 
+# search tasks names from db
+def search(request, input):
+    filtered_tasks = Task.objects.filter(description__contains=input)
+    tasks_list = list(filtered_tasks.values())
+    return JsonResponse({'tasks': tasks_list})
 
-def search(request,input):
-    return get_tasks(request)
+
+

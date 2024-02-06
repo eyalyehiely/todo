@@ -352,7 +352,7 @@ function getTasks() {
             const table = `
                 <table>
                     <tr>
-                        <th>Name</th>
+                        <th>Task Name</th>
                         <th>Description</th>
                         <th>Given Date</th>
                         <th>Finish Date</th>
@@ -425,16 +425,50 @@ function getTasks() {
 
 function search() {
     const input = document.getElementById('search').value;
-    axios.get(`http://127.0.0.1:8000/api/search/${input}`).then((response) => {
-        const matchingItems = response.data.tasks.filter(item => item.includes(input));
+    axios.post(`http://127.0.0.1:8000/api/search/${input}`).then((response) => {
+        const matchingItems = response.data.tasks;
 
         if (matchingItems.length > 0) {
-            document.getElementById('output').innerHTML = matchingItems.join('<br>');
+            const items = matchingItems.map(item => `
+            <table>
+                <tr>
+                    <th>Task Name</th>
+                    <th>Description</th>
+                    <th>Given Date</th>
+                    <th>Finish Date</th>
+                    <th>Given By</th>
+                    <th>Execute By</th>
+                    <th>Complete</th>
+                    <th>Updated At</th>
+                    <th>Delete</th>
+                    <th>Edit</th>
+                <tr>
+
+                <tr>
+                    <td>${item.name}</td>
+                    <td>${item.description}</td>
+                    <td>${item.given_date}</td>
+                    <td>${item.finish_date}</td>
+                    <td>${item.given_by}</td>
+                    <td>${item.execute_by}</td>
+                    <td>${item.complete}</td>
+                    <td>${item.updated_at}</td>
+                    <td><button id="${item.id}" name='deleteButton'>🗑️</button></td>
+                    <td><button id="${item.id}editButton" name="editButton">📝</button></td>
+                </tr>`
+                
+            ).join(''); 
+
+            document.getElementById('tasks').style.display = 'none';
+            document.getElementById('output').innerHTML = items;
+            
+
         } else {
-            document.getElementById('output').innerHTML = 'No results found.';
+            window.alert('No results found.');
+            window.location.href= 'http://127.0.0.1:8000/'
         }
     }).catch((error) => {
-        console.error('Error fetching data',error);
+        console.error('Error fetching data', error);
     });
 }
 
