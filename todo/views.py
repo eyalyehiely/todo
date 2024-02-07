@@ -67,11 +67,13 @@ def register(request):
             last_name = request.POST['last_name']
             password = make_password(request.POST['password'])
             email = request.POST['email']
-
-            user = User(first_name = first_name, last_name = last_name, username = username, password = password, email = email)
-            user.save()
-            send_email(request,email=email)
-            return render(request=request,template_name='todo/home.html')
+            if (first_name== '' or last_name== '' or password == '' or email== ''):
+                return HttpResponse('No valid data')
+            else:
+                user = User(first_name = first_name, last_name = last_name, username = username, password = password, email = email)
+                user.save()
+                # send_email(request,email=email)
+                return redirect('home')
 
     return render(request, 'todo/register.html')
 
