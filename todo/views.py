@@ -1,4 +1,4 @@
-from django.shortcuts import render,get_object_or_404,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
@@ -9,7 +9,7 @@ from .models import Task
 from django.http import JsonResponse
 import json
 import datetime
-from django.http import Http404
+from django.core.mail import send_mail
 
 def login(request):
     if request.method == 'GET':
@@ -33,6 +33,24 @@ def home(request):
 
 
 
+
+def send_email(request, email, username):
+    try:
+        user = get_object_or_404(User, email=email)
+        subject = f"{username}, Registration!"
+        message = 'This is a test email sent from a Django application.'
+        from_email = 'eyalwork0@gmail.com'
+        recipient_list = [user.email]
+        send_mail(subject, message, from_email, recipient_list)
+        return HttpResponse('Email sent successfully!')
+    except User.DoesNotExist:
+        return HttpResponse('User does not exist.')
+
+
+
+
+
+
 def register(request):
     if request.method == 'GET':
         return render(request, 'todo/register.html')
@@ -52,11 +70,15 @@ def register(request):
 
             user = User(first_name = first_name, last_name = last_name, username = username, password = password, email = email)
             user.save()
+            send_email(request,email=email,username=username)
             return render(request=request,template_name='todo/home.html')
 
     return render(request, 'todo/register.html')
 
+
+
 # creating a task
+@login_required(login_url='login/')
 def createTask(request):
     name = json.loads(request.body)['name']
     description = json.loads(request.body)['description']
@@ -70,7 +92,10 @@ def createTask(request):
     task1.save()
     return JsonResponse({"status": "ok"})
 
+
+
 # get all tasks per user(read)
+@login_required(login_url='login/')
 def get_tasks(request):
    
     current_user_id = request.user.id
@@ -92,7 +117,7 @@ def get_tasks(request):
     return JsonResponse({'tasks':tasks_list})
 
 
-
+@login_required(login_url='login/')
 def delete_task(request,task_id):
     try:
         task = Task.objects.filter(id=task_id)
@@ -101,7 +126,7 @@ def delete_task(request,task_id):
     except:
         return JsonResponse({"status":f"No such task with {task_id} id"})
 
-
+@login_required(login_url='login/')
 def update_task(request,task_id):
     try:
         task = Task.objects.get(id=task_id)
@@ -124,6 +149,7 @@ def update_task(request,task_id):
     
 
 # returning all usernames from db
+@login_required(login_url='login/')
 def execute_by(request):
     try:
         users = User.objects.all()
@@ -135,6 +161,7 @@ def execute_by(request):
         return JsonResponse({'status':'No data'})
 
 # search tasks names from db
+@login_required(login_url='login/')
 def search(request, input):
     filtered_tasks = Task.objects.filter(description__contains=input)
     tasks_list = list(filtered_tasks.values())
