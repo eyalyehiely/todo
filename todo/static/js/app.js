@@ -1,7 +1,7 @@
 const pageDiv = document.createElement('div');
 
 function exit(){
-    window.location.href= 'http://127.0.0.1:8000/login/'
+    window.location.href= '/login/'
 }
 const plusButton = document.createElement('button');
 plusButton.disabled =false;
@@ -41,7 +41,7 @@ function createCard(){
     const executeBy = document.createElement('select');
     executeBy.id = 'executeBy';
     executeBy.addEventListener('click', () => {
-        axios.post(`http://127.0.0.1:8000/api/execute_by`)
+        axios.post(`/api/execute_by`)
             .then((response) => {
                 const users = response.data.users;
     
@@ -194,7 +194,7 @@ function editTask(itemId){
     const executeBy = document.createElement('select');
     executeBy.id = 'executeBy';
     executeBy.addEventListener('click', () => {
-        axios.post(`http://127.0.0.1:8000/api/execute_by`)
+        axios.post(`/api/execute_by`)
             .then((response) => {
                 const users = response.data.users;
     
@@ -343,7 +343,7 @@ let tableDiv = document.createElement('div');
 
 // get all tasks for the connecting user.
 function getTasks() {
-    axios.get('http://127.0.0.1:8000/api/read').then((response) => {
+    axios.get('/api/read').then((response) => {
         if(response.data.tasks.length==0){
             document.getElementById('tasks').innerHTML = 'No Tasks for this user';
         }
@@ -388,7 +388,7 @@ function getTasks() {
                 document.getElementById(item.id).addEventListener('click', () => {
                    let answer=  window.prompt("Are you sure you want to delete this task?",'No')
                     if (answer.toLowerCase() == 'yes'){
-                    axios.get(`http://127.0.0.1:8000/api/delete/${item.id}`).then(()=>{
+                    axios.get(`/api/delete/${item.id}`).then(()=>{
                         window.alert("Task deleted")
                         getTasks()
                     })
@@ -425,7 +425,7 @@ function getTasks() {
 
 function search() {
     const input = document.getElementById('search').value;
-    axios.post(`http://127.0.0.1:8000/api/search/${input}`).then((response) => {
+    axios.post(`/api/search/${input}`).then((response) => {
         const matchingItems = response.data.tasks;
 
         if (matchingItems.length > 0) {
@@ -465,7 +465,7 @@ function search() {
 
         } else {
             window.alert('No results found.');
-            window.location.href= 'http://127.0.0.1:8000/'
+            window.location.href= '/'
         }
     }).catch((error) => {
         console.error('Error fetching data', error);

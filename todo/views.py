@@ -111,7 +111,7 @@ def get_tasks(request):
        'given_by':task.given_by,
        'execute_by':task.execute_by,
        'complete':task.complete,
-       'updated_at':task.updated_at
+       'updated_at':task.updated_at.strftime(" %H:%M:%S %Y-%m-%d")
        }
        tasks_list.append(task_data)
     return JsonResponse({'tasks':tasks_list})
@@ -166,6 +166,3 @@ def search(request, input):
     filtered_tasks = Task.objects.filter(description__contains=input)
     tasks_list = list(filtered_tasks.values())
     return JsonResponse({'tasks': tasks_list})
-
-
-
