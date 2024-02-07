@@ -165,6 +165,8 @@ def execute_by(request):
 # search tasks names from db
 @login_required(login_url='login/')
 def search(request, input):
-    filtered_tasks = Task.objects.filter(description__contains=input)
+    current_user_id = request.user.id
+    user_tasks = Task.objects.filter(user_id_id= current_user_id)
+    filtered_tasks = user_tasks.filter(description__contains=input)
     tasks_list = list(filtered_tasks.values())
     return JsonResponse({'tasks': tasks_list})
