@@ -138,11 +138,32 @@ def update_task(request,task_id):
         execute_by =json.loads(request.body)['executeBy']
         complete =  json.loads(request.body)['status']
         updateAt = datetime.datetime.now()
-        task.name = name
-        task.description =description
-        task.finish_date = finishDate
-        task.execute_by = execute_by
-        task.complete = complete
+        if name == ' ':
+            task.name=task.name
+        else:
+            task.name = name
+        
+        if description == ' ':
+            task.description=task.description
+        else:
+            task.description =description
+
+
+        if finishDate == ' ':
+            task.finish_date=task.finish_date
+
+        if execute_by == ' ':
+            task.execute_by=task.execute_by
+        else:
+            task.execute_by = execute_by
+
+
+
+        if complete == ' ':
+            task.complete=task.complete
+        else:
+            task.complete = complete
+
         task.updated_at = updateAt
         task.save()
         return JsonResponse({'updated_task':task})
