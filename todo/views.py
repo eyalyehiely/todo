@@ -1,5 +1,5 @@
 import ssl
-ssl._create_default_https_context = ssl._create_unverified_context
+
 
 from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponse
@@ -72,8 +72,8 @@ def register(request):
             else:
                 user = User(first_name = first_name, last_name = last_name, username = username, password = password, email = email)
                 user.save()
-                # send_email(request,email=email)
-                return redirect('home')
+                send_email(request,email=email)
+                return redirect('login')
 
     return render(request, 'todo/register.html')
 

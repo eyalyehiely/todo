@@ -2,6 +2,7 @@ const pageDiv = document.createElement('div');
 
 function exit(){
     window.location.href= '/login/'
+    history.replaceState(null, null, 'url_of_your_page_here');
 }
 const plusButton = document.createElement('button');
 plusButton.disabled =false;
