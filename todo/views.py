@@ -1,3 +1,6 @@
+import ssl
+ssl._create_default_https_context = ssl._create_unverified_context
+
 from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth import authenticate
@@ -9,6 +12,7 @@ from .models import Task
 from django.http import JsonResponse
 import json
 import datetime
+from todo_project import settings
 from django.core.mail import send_mail
 
 def login(request):
@@ -34,23 +38,31 @@ def home(request):
 
 
 
-def send_email(request, email, username):
-    try:
-        user = get_object_or_404(User, email=email)
-        subject = f"{username}, Registration!"
-        message = 'This is a test email sent from a Django application.'
-        from_email = 'eyalwork0@gmail.com'
-        recipient_list = [user.email]
-        send_mail(subject, message, from_email, recipient_list)
-        return HttpResponse('Email sent successfully!')
-    except User.DoesNotExist:
-        return HttpResponse('User does not exist.')
+def send_email(request,email):
+    subject = 'Subject'
+    message = 'Body'
+    email_from = settings.EMAIL_HOST_USER
+    recipient_list = [f'{email}']
+    send_mail(subject, message, email_from, recipient_list)
+
+
+# def send_email(request, email, username):
+#     try:
+#         user = get_object_or_404(User, email=email)
+#         subject = f"{username}, Registration!"
+#         message = 'This is a test email sent from a Django application.'
+#         from_email = 'eyalwork0@gmail.com'
+#         recipient_list = [user.email]
+#         send_mail(subject, message, from_email, recipient_list)
+#         return HttpResponse('Email sent successfully!')
+#     except User.DoesNotExist:
+#         return HttpResponse('User does not exist.')
 
 
 
 
 
-
+#register to app
 def register(request):
     if request.method == 'GET':
         return render(request, 'todo/register.html')
@@ -70,7 +82,7 @@ def register(request):
 
             user = User(first_name = first_name, last_name = last_name, username = username, password = password, email = email)
             user.save()
-            send_email(request,email=email,username=username)
+            send_email(request,email=email)
             return render(request=request,template_name='todo/home.html')
 
     return render(request, 'todo/register.html')
@@ -106,7 +118,7 @@ def get_tasks(request):
        'id':task.id,
        "name":task.name,
        'description':task.description,
-       'given_date':task.given_date.isoformat(),
+       'given_date':task.given_date,
        'finish_date':task.finish_date,
        'given_by':task.given_by,
        'execute_by':task.execute_by,
@@ -139,8 +151,8 @@ def update_task(request,task_id):
         task.name = name
         task.description =description
         task.finish_date = finishDate
-        task.execute_by =execute_by
-        task.complete =complete
+        task.execute_by = execute_by
+        task.complete = complete
         task.updated_at = updateAt
         task.save()
         return JsonResponse({'updated_task':task})
