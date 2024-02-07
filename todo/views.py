@@ -1,5 +1,3 @@
-import ssl
-
 
 from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponse
@@ -34,18 +32,6 @@ def login(request):
 @login_required(login_url='login/')
 def home(request):
     return render(request=request,template_name='todo/home.html')
-
-
-
-
-def send_email(request,email):
-    subject = 'Registration'
-    message = 'Hi, thank u for your registration'
-    email_from = settings.EMAIL_HOST_USER
-    recipient_list = [f'{email}']
-    send_mail(subject, message, email_from, recipient_list)
-
-
 
 
 
@@ -138,28 +124,28 @@ def update_task(request,task_id):
         execute_by =json.loads(request.body)['executeBy']
         complete =  json.loads(request.body)['status']
         updateAt = datetime.datetime.now()
-        if name == ' ':
+        if name == '':
             task.name=task.name
         else:
             task.name = name
         
-        if description == ' ':
+        if description == '':
             task.description=task.description
         else:
             task.description =description
 
 
-        if finishDate == ' ':
+        if finishDate == '':
             task.finish_date=task.finish_date
 
-        if execute_by == ' ':
+        if execute_by == '':
             task.execute_by=task.execute_by
         else:
             task.execute_by = execute_by
 
 
 
-        if complete == ' ':
+        if complete == '':
             task.complete=task.complete
         else:
             task.complete = complete
