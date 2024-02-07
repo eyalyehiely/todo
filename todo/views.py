@@ -39,24 +39,12 @@ def home(request):
 
 
 def send_email(request,email):
-    subject = 'Subject'
-    message = 'Body'
+    subject = 'Registration'
+    message = 'Hi, thank u for your registration'
     email_from = settings.EMAIL_HOST_USER
     recipient_list = [f'{email}']
     send_mail(subject, message, email_from, recipient_list)
 
-
-# def send_email(request, email, username):
-#     try:
-#         user = get_object_or_404(User, email=email)
-#         subject = f"{username}, Registration!"
-#         message = 'This is a test email sent from a Django application.'
-#         from_email = 'eyalwork0@gmail.com'
-#         recipient_list = [user.email]
-#         send_mail(subject, message, from_email, recipient_list)
-#         return HttpResponse('Email sent successfully!')
-#     except User.DoesNotExist:
-#         return HttpResponse('User does not exist.')
 
 
 
