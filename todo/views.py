@@ -10,8 +10,7 @@ from .models import Task
 from django.http import JsonResponse
 import json
 import datetime
-from todo_project import settings
-from django.core.mail import send_mail
+
 
 def login(request):
     if request.method == 'GET':
@@ -58,7 +57,6 @@ def register(request):
             else:
                 user = User(first_name = first_name, last_name = last_name, username = username, password = password, email = email)
                 user.save()
-                send_email(request,email=email)
                 return redirect('login')
 
     return render(request, 'todo/register.html')
